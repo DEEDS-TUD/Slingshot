@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_termios
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structTermiosPtr
+ </dt_type>
+ <dial_groups order="C_IFLAG;C_OFLAG;C_CFLAG;C_LFLAG;C_CC;BAUD">
+  <group name="BAUD">
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    THREE_HUNDRED
+   </dial>
+   <dial>
+    THREE8400
+   </dial>
+   <dial>
+    NEG1
+   </dial>
+   <dial>
+    UNSET
+   </dial>
+  </group>
+  <group name="C_CC">
+   <dial>
+    CC_UNSET
+   </dial>
+   <dial>
+    CC_VKILL
+   </dial>
+   <dial>
+    CC_VMIN
+   </dial>
+  </group>
+  <group name="C_LFLAG">
+   <dial>
+    ECHOK_SET
+   </dial>
+   <dial>
+    ICANON_SET
+   </dial>
+   <dial>
+    IEXTEN_SET
+   </dial>
+   <dial>
+    L_MAXINT
+   </dial>
+   <dial>
+    L_NEGONE
+   </dial>
+   <dial>
+    L_ONE
+   </dial>
+   <dial>
+    L_ZERO
+   </dial>
+  </group>
+  <group name="C_CFLAG">
+   <dial>
+    CLOCAL_SET
+   </dial>
+   <dial>
+    PARENB_SET
+   </dial>
+   <dial>
+    PARODD_SET
+   </dial>
+   <dial>
+    C_MAXINT
+   </dial>
+   <dial>
+    C_NEGONE
+   </dial>
+   <dial>
+    C_ONE
+   </dial>
+   <dial>
+    C_ZERO
+   </dial>
+  </group>
+  <group name="C_OFLAG">
+   <dial>
+    OPOST_SET
+   </dial>
+   <dial>
+    O_MAXINT
+   </dial>
+   <dial>
+    O_NEGONE
+   </dial>
+   <dial>
+    O_ONE
+   </dial>
+   <dial>
+    O_ZERO
+   </dial>
+  </group>
+  <group name="C_IFLAG">
+   <dial>
+    BRKINT_SET
+   </dial>
+   <dial>
+    PARMRK_SET
+   </dial>
+   <dial>
+    I_MAXINT
+   </dial>
+   <dial>
+    I_NEGONE
+   </dial>
+   <dial>
+    I_ONE
+   </dial>
+   <dial>
+    I_ZERO
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <termios.h>
+#include "b_ptr_buf.h"
+#define structTermiosPtr struct termios*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct termios termios_temp;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[termios_temp.c_iflag = 0;
+termios_temp.c_oflag = 0;
+termios_temp.c_cflag = 0;
+termios_temp.c_lflag = 0;]]>
+  </block>
+  <block dials="BRKINT_SET">
+   <![CDATA[termios_temp.c_iflag |=  BRKINT;]]>
+  </block>
+  <block dials="PARMRK_SET">
+   <![CDATA[termios_temp.c_iflag |=  PARMRK;]]>
+  </block>
+  <block dials="I_MAXINT">
+   <![CDATA[termios_temp.c_iflag = MAXINT;]]>
+  </block>
+  <block dials="I_ZERO">
+   <![CDATA[termios_temp.c_iflag = 0;]]>
+  </block>
+  <block dials="I_ONE">
+   <![CDATA[termios_temp.c_iflag = 1;]]>
+  </block>
+  <block dials="I_NEGONE">
+   <![CDATA[termios_temp.c_iflag = -1;]]>
+  </block>
+  <block dials="OPOST_SET">
+   <![CDATA[termios_temp.c_oflag |= OPOST;]]>
+  </block>
+  <block dials="O_MAXINT">
+   <![CDATA[termios_temp.c_oflag = MAXINT;]]>
+  </block>
+  <block dials="O_ZERO">
+   <![CDATA[termios_temp.c_oflag = 0;]]>
+  </block>
+  <block dials="O_ONE">
+   <![CDATA[termios_temp.c_oflag = 1;]]>
+  </block>
+  <block dials="O_NEGONE">
+   <![CDATA[termios_temp.c_oflag = -1;]]>
+  </block>
+  <block dials="CLOCAL_SET">
+   <![CDATA[termios_temp.c_cflag |= CLOCAL;]]>
+  </block>
+  <block dials="PARENB_SET">
+   <![CDATA[termios_temp.c_cflag |= PARENB;]]>
+  </block>
+  <block dials="PARODD_SET">
+   <![CDATA[termios_temp.c_cflag |= PARODD;]]>
+  </block>
+  <block dials="C_MAXINT">
+   <![CDATA[termios_temp.c_cflag = MAXINT;]]>
+  </block>
+  <block dials="C_ZERO">
+   <![CDATA[termios_temp.c_cflag = 0;]]>
+  </block>
+  <block dials="C_ONE">
+   <![CDATA[termios_temp.c_cflag = 1;]]>
+  </block>
+  <block dials="C_NEGONE">
+   <![CDATA[termios_temp.c_cflag = -1;]]>
+  </block>
+  <block dials="ECHOK_SET">
+   <![CDATA[termios_temp.c_lflag |= ECHOK;]]>
+  </block>
+  <block dials="ICANON_SET">
+   <![CDATA[termios_temp.c_lflag |= ICANON;]]>
+  </block>
+  <block dials="IEXTEN_SET">
+   <![CDATA[termios_temp.c_lflag |= IEXTEN;]]>
+  </block>
+  <block dials="L_MAXINT">
+   <![CDATA[termios_temp.c_lflag = MAXINT;]]>
+  </block>
+  <block dials="L_ZERO">
+   <![CDATA[termios_temp.c_lflag = 0;]]>
+  </block>
+  <block dials="L_ONE">
+   <![CDATA[termios_temp.c_lflag = 1;]]>
+  </block>
+  <block dials="L_NEGONE">
+   <![CDATA[termios_temp.c_lflag = -1;]]>
+  </block>
+  <block dials="CC_VKILL">
+   <![CDATA[termios_temp.c_cc[0] = VKILL;]]>
+  </block>
+  <block dials="CC_VMIN">
+   <![CDATA[termios_temp.c_cc[0] = VMIN;]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[if ((cfsetospeed(&termios_temp, 0))!=0){
+	perror("set BAUD to 0 failed");
+	exit(99);
+	}]]>
+  </block>
+  <block dials="THREE_HUNDRED">
+   <![CDATA[if ((cfsetospeed(&termios_temp, 300))!=0){
+		perror("set BAUD to 300 failed");
+		exit(99);
+                }]]>
+  </block>
+  <block dials="THREE8400">
+   <![CDATA[if ((cfsetospeed(&termios_temp, 38400))!=0){
+		perror("set BAUD to 38400 failed");
+		exit(99);
+                }]]>
+  </block>
+  <block dials="NEG1">
+   <![CDATA[if ((cfsetospeed(&termios_temp, -1))!=0){
+		perror("set BAUD to -1 failed");
+		exit(99);
+                }]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &termios_temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

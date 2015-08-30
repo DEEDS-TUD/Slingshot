@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_float
+ </name>
+ <parent>
+  b_ptr_void
+ </parent>
+ <dt_type>
+  float*
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    FMINEXP
+   </dial>
+   <dial>
+    LN2
+   </dial>
+   <dial>
+    PI
+   </dial>
+   <dial>
+    HALF_PI
+   </dial>
+   <dial>
+    TWO_PI
+   </dial>
+   <dial>
+    SQRT2
+   </dial>
+   <dial>
+    E
+   </dial>
+   <dial>
+    MAXFLOAT
+   </dial>
+   <dial>
+    MINFLOAT
+   </dial>
+   <dial>
+    NEGMAXFLOAT
+   </dial>
+   <dial>
+    NEGMINFLOAT
+   </dial>
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    NEGONE
+   </dial>
+   <dial>
+    ONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_void.h"
+#include "math.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static float temp_float;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="FMINEXP">
+   <![CDATA[temp_float = FMINEXP; // (-(DMAXEXP + DSIGNIF - _HIDDENBIT - 3))]]>
+  </block>
+  <block dials="LN2">
+   <![CDATA[temp_float = M_LN2; // 6.9314718055994530942E-1 /*Hex  2^-1 * 1.62E42FEFA39EF */]]>
+  </block>
+  <block dials="PI">
+   <![CDATA[temp_float = M_PI;// 3.1415926535897932385E0  /*Hex  2^ 1 * 1.921FB54442D18 */]]>
+  </block>
+  <block dials="HALF_PI">
+   <![CDATA[temp_float = M_PI_2;  // PI/2]]>
+  </block>
+  <block dials="TWO_PI">
+   <![CDATA[temp_float = M_PI * 2.0;]]>
+  </block>
+  <block dials="SQRT2">
+   <![CDATA[temp_float= M_SQRT2;// 1.4142135623730950488E0  /*Hex  2^ 0 * 1.6A09E667F3BCD */]]>
+  </block>
+  <block dials="E">
+   <![CDATA[temp_float = M_E; // 2.718281828459045235360287]]>
+  </block>
+  <block dials="MAXFLOAT">
+   <![CDATA[temp_float = MAXFLOAT;]]>
+  </block>
+  <block dials="MINFLOAT">
+   <![CDATA[temp_float = MINFLOAT;]]>
+  </block>
+  <block dials="NEGMAXFLOAT">
+   <![CDATA[temp_float = -MAXFLOAT;]]>
+  </block>
+  <block dials="NEGMINFLOAT">
+   <![CDATA[temp_float = -MINDOUBLE;]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[temp_float = 0.0;]]>
+  </block>
+  <block dials="NEGONE">
+   <![CDATA[temp_float = -1.0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[temp_float = 1.0;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &temp_float;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

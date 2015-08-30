@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_itimerspec
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structitimerspecptr
+ </dt_type>
+ <dial_groups order="INTERVAL;VALUE">
+  <group name="INTERVAL">
+   <dial>
+    INTERVAL_REALTIME
+   </dial>
+   <dial>
+    INTERVAL_GETTIME
+   </dial>
+   <dial>
+    INTERVAL_ZERO
+   </dial>
+   <dial>
+    INTERVAL_NEG_ONE_NS
+   </dial>
+   <dial>
+    INTERVAL_ILL
+   </dial>
+   <dial>
+    INTERVAL_NEG_ONE_SEC
+   </dial>
+   <dial>
+    INTERVAL_MIN
+   </dial>
+   <dial>
+    INTERVAL_MAX
+   </dial>
+   <dial>
+    INTERVAL_MIXED_1
+   </dial>
+   <dial>
+    INTERVAL_MIXED_2
+   </dial>
+  </group>
+  <group name="VALUE">
+   <dial>
+    VALUE_REALTIME
+   </dial>
+   <dial>
+    VALUE_GETTIME
+   </dial>
+   <dial>
+    VALUE_ZERO
+   </dial>
+   <dial>
+    VALUE_NEG_ONE_NS
+   </dial>
+   <dial>
+    VALUE_ILL
+   </dial>
+   <dial>
+    VALUE_NEG_ONE_SEC
+   </dial>
+   <dial>
+    VALUE_MIN
+   </dial>
+   <dial>
+    VALUE_MAX
+   </dial>
+   <dial>
+    VALUE_MIXED_1
+   </dial>
+   <dial>
+    VALUE_MIXED_2
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <time.h>
+#include "bTypes.h"
+#include "b_ptr_buf.h"
+#define structitimerspecptr struct itimerspec*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct itimerspec itimerspec_temp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="INTERVAL_GETTIME, VALUE_GETTIME">
+   <![CDATA[if ((timer_gettime ( TIMER_ABSTIME, &itimerspec_temp)) == -1)
+    {
+      FILE* logFile = NULL;
+      
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile, "b_ptr_itimerspec GETTIME - error encountered timer_gettime  - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="INTERVAL_REALTIME">
+   <![CDATA[if (clock_gettime(CLOCK_REALTIME, &(itimerspec_temp.it_interval)) == -1)
+    {
+      FILE* logFile = NULL;
+
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile, "b_ptr_itimerspec INTERVAL_REALTIME - error encountered with clock_gettime  - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="INTERVAL_ZERO">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = 0;
+    itimerspec_temp.it_interval.tv_nsec = 0;]]>
+  </block>
+  <block dials="INTERVAL_NEG_ONE_NS">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = 0; 
+    itimerspec_temp.it_interval.tv_nsec = -1;]]>
+  </block>
+  <block dials="INTERVAL_ILL">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = 0;
+    itimerspec_temp.it_interval.tv_nsec = (int) 10e10;]]>
+  </block>
+  <block dials="INTERVAL_NEG_ONE_SEC">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = -1;
+    itimerspec_temp.it_interval.tv_nsec = 0;]]>
+  </block>
+  <block dials="INTERVAL_MIN">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = -MAXLONG;
+    itimerspec_temp.it_interval.tv_nsec = -MAXINT;]]>
+  </block>
+  <block dials="INTERVAL_MAX">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = MAXLONG;
+    itimerspec_temp.it_interval.tv_nsec = MAXINT;]]>
+  </block>
+  <block dials="INTERVAL_MIXED_1">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = -1;
+    itimerspec_temp.it_interval.tv_nsec = 1;]]>
+  </block>
+  <block dials="INTERVAL_MIXED_2">
+   <![CDATA[itimerspec_temp.it_interval.tv_sec = 1; 
+    itimerspec_temp.it_interval.tv_nsec = -1;]]>
+  </block>
+  <block dials="VALUE_REALTIME">
+   <![CDATA[if (clock_gettime(CLOCK_REALTIME, &(itimerspec_temp.it_value)) == -1)
+    {
+      FILE* logFile = NULL;
+
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile, "b_ptr_itimerspec VALUE_REALTIME - error encountered with clock_gettime - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="VALUE_ZERO">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = 0;
+    itimerspec_temp.it_value.tv_nsec = 0;]]>
+  </block>
+  <block dials="VALUE_NEG_ONE_NS">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = 0;
+    itimerspec_temp.it_value.tv_nsec = -1;]]>
+  </block>
+  <block dials="VALUE_ILL">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = 0;
+    itimerspec_temp.it_value.tv_nsec = (int) 10e10;]]>
+  </block>
+  <block dials="VALUE_NEG_ONE_SEC">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = -1;
+    itimerspec_temp.it_value.tv_nsec = 0;]]>
+  </block>
+  <block dials="VALUE_MIN">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = -MAXLONG;  
+    itimerspec_temp.it_value.tv_nsec = -MAXINT;]]>
+  </block>
+  <block dials="VALUE_MAX">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = MAXLONG;
+    itimerspec_temp.it_value.tv_nsec = MAXINT;]]>
+  </block>
+  <block dials="VALUE_MIXED_1">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = -1;
+    itimerspec_temp.it_value.tv_nsec = 1;]]>
+  </block>
+  <block dials="VALUE_MIXED_2">
+   <![CDATA[itimerspec_temp.it_value.tv_sec = 1;      
+    itimerspec_temp.it_value.tv_nsec = -1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable=&itimerspec_temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

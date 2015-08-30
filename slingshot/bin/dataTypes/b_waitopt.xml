@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_waitopt
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    NOHANG
+   </dial>
+   <dial>
+    UNTRACED
+   </dial>
+   <dial>
+    BOTH
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <sys/wait.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[_theVariable = 0;]]>
+  </block>
+  <block dials="NOHANG, BOTH">
+   <![CDATA[_theVariable |= WNOHANG;]]>
+  </block>
+  <block dials="UNTRACED, BOTH">
+   <![CDATA[_theVariable |= WUNTRACED;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

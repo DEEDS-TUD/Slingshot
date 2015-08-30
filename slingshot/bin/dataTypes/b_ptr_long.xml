@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_long
+ </name>
+ <parent>
+  b_ptr_int
+ </parent>
+ <dt_type>
+  long*
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    MAXLONG
+   </dial>
+   <dial>
+    NEG_MAXLONG
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static long temp_long;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXLONG">
+   <![CDATA[temp_long = MAXLONG;]]>
+  </block>
+  <block dials="NEG_MAXLONG">
+   <![CDATA[temp_long = - temp_long;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &temp_long;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

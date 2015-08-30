@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_gid_t
+ </name>
+ <parent>
+  b_ptr_unsigned_int
+ </parent>
+ <dt_type>
+  gid_t*
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    GID_SELF
+   </dial>
+   <dial>
+    EGID_SELF
+   </dial>
+   <dial>
+    UID_SELF
+   </dial>
+   <dial>
+    EUID_SELF
+   </dial>
+   <dial>
+    GID_PLUS1
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[//unsigned int gid_t
+#include <sys/types.h>
+#include <unistd.h>//for getgid()
+#include "b_ptr_unsigned_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static gid_t temp_gid;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="GID_SELF">
+   <![CDATA[temp_gid= getgid();
+    _theVariable=&temp_gid;]]>
+  </block>
+  <block dials="EGID_SELF">
+   <![CDATA[temp_gid= getegid();
+    _theVariable=&temp_gid;]]>
+  </block>
+  <block dials="UID_SELF">
+   <![CDATA[temp_gid= getuid();
+    _theVariable=&temp_gid;]]>
+  </block>
+  <block dials="EUID_SELF">
+   <![CDATA[temp_gid= geteuid();
+    _theVariable=&temp_gid;]]>
+  </block>
+  <block dials="GID_PLUS1">
+   <![CDATA[temp_gid= getgid() +1;
+    _theVariable=&temp_gid;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

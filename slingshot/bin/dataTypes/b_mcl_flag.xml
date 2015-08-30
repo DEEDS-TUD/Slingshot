@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_mcl_flag
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    CURRENT
+   </dial>
+   <dial>
+    FUTURE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <sys/mman.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="CURRENT">
+   <![CDATA[_theVariable= MCL_CURRENT;]]>
+  </block>
+  <block dials="FUTURE">
+   <![CDATA[_theVariable= MCL_FUTURE;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

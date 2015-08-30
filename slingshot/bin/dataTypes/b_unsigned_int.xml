@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_unsigned_int
+ </name>
+ <parent>
+  b_unsigned_short
+ </parent>
+ <dt_type>
+  Uint
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    MAXUINT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_unsigned_short.h"
+   #include <limits.h>
+   #define Uint unsigned int]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXUINT">
+   <![CDATA[_theVariable= UINT_MAX;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

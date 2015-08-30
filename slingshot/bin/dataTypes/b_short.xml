@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_short
+ </name>
+ <parent>
+  b_short_int_common
+ </parent>
+ <dt_type>
+  short
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    NEG_ONE
+   </dial>
+   <dial>
+    NEG_SIXTYFOUR
+   </dial>
+   <dial>
+    NEG_MAXSHORT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_short_int_common.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="NEG_ONE">
+   <![CDATA[_theVariable = -1;]]>
+  </block>
+  <block dials="NEG_SIXTYFOUR">
+   <![CDATA[_theVariable = -64;]]>
+  </block>
+  <block dials="NEG_MAXSHORT">
+   <![CDATA[_theVariable= - MAXSHORT;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_sched_policy
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    FIFO
+   </dial>
+   <dial>
+    RR
+   </dial>
+   <dial>
+    OTHER
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sched.h>
+   #include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="FIFO">
+   <![CDATA[_theVariable= SCHED_FIFO;]]>
+  </block>
+  <block dials="RR">
+   <![CDATA[_theVariable= SCHED_RR;]]>
+  </block>
+  <block dials="OTHER">
+   <![CDATA[_theVariable= SCHED_OTHER;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

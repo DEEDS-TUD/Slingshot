@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_float
+ </name>
+ <parent>
+  paramAccess
+ </parent>
+ <dt_type>
+  float
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    ONE
+   </dial>
+   <dial>
+    NEGONE
+   </dial>
+   <dial>
+    FMINEXP
+   </dial>
+   <dial>
+    MLN2
+   </dial>
+   <dial>
+    MPI
+   </dial>
+   <dial>
+    HALF_PI
+   </dial>
+   <dial>
+    QUARTER_PI
+   </dial>
+   <dial>
+    TWO_PI
+   </dial>
+   <dial>
+    MSQRT2
+   </dial>
+   <dial>
+    E
+   </dial>
+   <dial>
+    MAXFLOAT
+   </dial>
+   <dial>
+    MINFLOAT
+   </dial>
+   <dial>
+    NEGMAXFLOAT
+   </dial>
+   <dial>
+    NEGMINFLOAT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "values.h"  //for digital unix
+  #include "bTypes.h"
+  #include <math.h>
+  #define intBase unsigned short]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="ZERO">
+   <![CDATA[_theVariable=0.0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[_theVariable=1.0;]]>
+  </block>
+  <block dials="NEGONE">
+   <![CDATA[_theVariable=-1.0;]]>
+  </block>
+  <block dials="FMINEXP">
+   <![CDATA[_theVariable=FMINEXP; // (-(DMAXEXP + DSIGNIF - _HIDDENBIT - 3))]]>
+  </block>
+  <block dials="MLN2">
+   <![CDATA[_theVariable=M_LN2; // 6.9314718055994530942E-1 /*Hex  2^-1 * 1.62E42FEFA39EF */]]>
+  </block>
+  <block dials="MPI">
+   <![CDATA[_theVariable=M_PI;// 3.1415926535897932385E0  /*Hex  2^ 1 * 1.921FB54442D18 */]]>
+  </block>
+  <block dials="HALF_PI">
+   <![CDATA[_theVariable = M_PI/2;]]>
+  </block>
+  <block dials="QUARTER_PI">
+   <![CDATA[_theVariable = M_PI/4;]]>
+  </block>
+  <block dials="TWO_PI">
+   <![CDATA[_theVariable = M_PI * 2.0;]]>
+  </block>
+  <block dials="MSQRT2">
+   <![CDATA[_theVariable=M_SQRT2;// 1.4142135623730950488E0  /*Hex  2^ 0 * 1.6A09E667F3BCD */]]>
+  </block>
+  <block dials="E">
+   <![CDATA[_theVariable= M_E;   //2.718281828459045235360287]]>
+  </block>
+  <block dials="MAXFLOAT">
+   <![CDATA[_theVariable=MAXFLOAT;]]>
+  </block>
+  <block dials="MINFLOAT">
+   <![CDATA[_theVariable=MINFLOAT;]]>
+  </block>
+  <block dials="NEGMAXFLOAT">
+   <![CDATA[_theVariable=-MAXFLOAT;]]>
+  </block>
+  <block dials="NEGMINFLOAT">
+   <![CDATA[_theVariable=-MINFLOAT;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

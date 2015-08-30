@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_sigevent
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structsigeventptr
+ </dt_type>
+ <dial_groups order="NOTIFY;SIGNO">
+  <group name="SIGNO">
+   <dial>
+    SIGABRT
+   </dial>
+   <dial>
+    SIGINT
+   </dial>
+   <dial>
+    SIGILL
+   </dial>
+   <dial>
+    SIGSEGV
+   </dial>
+   <dial>
+    SIGRTMIN
+   </dial>
+   <dial>
+    SIGRTMAX
+   </dial>
+   <dial>
+    MAXINT
+   </dial>
+   <dial>
+    MININT
+   </dial>
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    ONE
+   </dial>
+   <dial>
+    NEGONE
+   </dial>
+  </group>
+  <group name="NOTIFY">
+   <dial>
+    NOTIFY_ZERO
+   </dial>
+   <dial>
+    NOTIFY_MAXINT
+   </dial>
+   <dial>
+    NOTIFY_MININT
+   </dial>
+   <dial>
+    NOTIFY_NEGONE
+   </dial>
+   <dial>
+    NOTIFY_ONE
+   </dial>
+   <dial>
+    NOTIFY_NONE
+   </dial>
+   <dial>
+    NOTIFY_SIGNAL
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <signal.h>
+#include "b_ptr_buf.h"
+#define structsigeventptr struct sigevent*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct sigevent sigEvent;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="NOTIFY_ZERO">
+   <![CDATA[sigEvent.sigev_notify = 0;]]>
+  </block>
+  <block dials="NOTIFY_MAXINT">
+   <![CDATA[sigEvent.sigev_notify = MAXINT;]]>
+  </block>
+  <block dials="NOTIFY_MININT">
+   <![CDATA[sigEvent.sigev_notify = -MAXINT;]]>
+  </block>
+  <block dials="NOTIFY_NEGONE">
+   <![CDATA[sigEvent.sigev_notify = -1;]]>
+  </block>
+  <block dials="NOTIFY_ONE">
+   <![CDATA[sigEvent.sigev_notify = 1;]]>
+  </block>
+  <block dials="NOTIFY_NONE">
+   <![CDATA[sigEvent.sigev_notify = SIGEV_NONE;]]>
+  </block>
+  <block dials="NOTIFY_SIGNAL">
+   <![CDATA[sigEvent.sigev_notify = SIGEV_SIGNAL;]]>
+  </block>
+  <block dials="SIGABRT">
+   <![CDATA[sigEvent.sigev_signo = SIGABRT;]]>
+  </block>
+  <block dials="SIGINT">
+   <![CDATA[sigEvent.sigev_signo = SIGINT;]]>
+  </block>
+  <block dials="SIGILL">
+   <![CDATA[sigEvent.sigev_signo = SIGILL;]]>
+  </block>
+  <block dials="SIGSEGV">
+   <![CDATA[sigEvent.sigev_signo = SIGSEGV;]]>
+  </block>
+  <block dials="SIGRTMIN">
+   <![CDATA[sigEvent.sigev_signo = SIGRTMIN;]]>
+  </block>
+  <block dials="SIGRTMAX">
+   <![CDATA[sigEvent.sigev_signo = SIGRTMAX;]]>
+  </block>
+  <block dials="MAXINT">
+   <![CDATA[sigEvent.sigev_signo = MAXINT;]]>
+  </block>
+  <block dials="MININT">
+   <![CDATA[sigEvent.sigev_signo = -MAXINT;]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[sigEvent.sigev_signo = 0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[sigEvent.sigev_signo = 1;]]>
+  </block>
+  <block dials="NEGONE">
+   <![CDATA[sigEvent.sigev_signo = -1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable=&sigEvent;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

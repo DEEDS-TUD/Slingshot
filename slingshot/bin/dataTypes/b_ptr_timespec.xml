@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_timespec
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structtimespecptr
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    REALTIME
+   </dial>
+   <dial>
+    TIMEOUT_ZERO
+   </dial>
+   <dial>
+    TIMEOUT_NEG_ONE_NS
+   </dial>
+   <dial>
+    TIMEOUT_ILL
+   </dial>
+   <dial>
+    TIMEOUT_NEG_ONE_SEC
+   </dial>
+   <dial>
+    TIMEOUT_MIN
+   </dial>
+   <dial>
+    TIMEOUT_MAX
+   </dial>
+   <dial>
+    TIMEOUT_MIXED_1
+   </dial>
+   <dial>
+    TIMEOUT_MIXED_2
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <time.h>
+#include "bTypes.h"
+#include "b_ptr_buf.h"
+#define structtimespecptr struct timespec*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct timespec timeout_tmp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="REALTIME">
+   <![CDATA[if (clock_gettime(CLOCK_REALTIME, &timeout_tmp) == -1)
+    {
+      FILE* logFile = NULL;
+
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile, "b_ptr_timespec REALTIME - error encountered getting timespec for REALTIME - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="TIMEOUT_ZERO">
+   <![CDATA[timeout_tmp.tv_sec = 0;
+    timeout_tmp.tv_nsec = 0;]]>
+  </block>
+  <block dials="TIMEOUT_NEG_ONE_NS">
+   <![CDATA[timeout_tmp.tv_sec = 0;
+    timeout_tmp.tv_nsec = -1;]]>
+  </block>
+  <block dials="TIMEOUT_ILL">
+   <![CDATA[timeout_tmp.tv_sec = 0;
+    timeout_tmp.tv_nsec = (int) 10e10;]]>
+  </block>
+  <block dials="TIMEOUT_NEG_ONE_SEC">
+   <![CDATA[timeout_tmp.tv_sec = -1;
+    timeout_tmp.tv_nsec = 0;]]>
+  </block>
+  <block dials="TIMEOUT_MIN">
+   <![CDATA[timeout_tmp.tv_sec = -MAXLONG;  
+    timeout_tmp.tv_nsec = -MAXINT;]]>
+  </block>
+  <block dials="TIMEOUT_MAX">
+   <![CDATA[timeout_tmp.tv_sec = MAXLONG;
+    timeout_tmp.tv_nsec = MAXINT;]]>
+  </block>
+  <block dials="TIMEOUT_MIXED_1">
+   <![CDATA[timeout_tmp.tv_sec = -1;
+    timeout_tmp.tv_nsec = 1;]]>
+  </block>
+  <block dials="TIMEOUT_MIXED_2">
+   <![CDATA[timeout_tmp.tv_sec = 1;      
+    timeout_tmp.tv_nsec = -1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable=&timeout_tmp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

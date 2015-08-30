@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_file
+ </name>
+ <parent>
+  b_ptr_void
+ </parent>
+ <dt_type>
+  FILE*
+ </dt_type>
+ <dial_groups>
+  <group name="STATE">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    BEGINNING
+   </dial>
+   <dial>
+    EOF
+   </dial>
+   <dial>
+    PAST_EOF
+   </dial>
+  </group>
+  <group name="MODE">
+   <dial>
+    READ
+   </dial>
+   <dial>
+    WRITE
+   </dial>
+   <dial>
+    APPEND
+   </dial>
+   <dial>
+    READ_PLUS
+   </dial>
+   <dial>
+    WRITE_PLUS
+   </dial>
+   <dial>
+    APPEND_PLUS
+   </dial>
+  </group>
+  <group name="EXISTANCE">
+   <dial>
+    EXIST
+   </dial>
+   <dial>
+    CLOSED
+   </dial>
+   <dial>
+    DELETED
+   </dial>
+  </group>
+  <group name="PERMISSIONS">
+   <dial>
+    R_USER
+   </dial>
+   <dial>
+    W_USER
+   </dial>
+   <dial>
+    X_USER
+   </dial>
+   <dial>
+    RWX_USER
+   </dial>
+   <dial>
+    R_GRP
+   </dial>
+   <dial>
+    NONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <fcntl.h>
+#include <sys/stat.h> 
+#include <unistd.h>
+#include <errno.h>
+#include "b_ptr_void.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define TESTDIR "testdir"
+#define TESTFILE        "testdir/testfile_fp"]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[char fileMode[2];
+   mode_t permissionMode;
+   int oflag;
+   int pos;
+   int empty_flag = 0;
+
+   struct stat stat_buf_temp;
+   int fd;
+
+   // Setup log file for template information
+
+   FILE* logFile = NULL;
+
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }
+   //fprintf (logFile, "\nNEW TEST \n");
+
+   if (mkdir(TESTDIR,S_IRWXU|S_IRWXG|S_IRWXO)!=0) /* create test directory, u+rwx */   
+   {  
+     //if the directory already exists ignore the error
+     if (errno != EEXIST) 
+     {
+       fprintf(logFile,"mkdir failed. Function not tested\n");
+       fclose(logFile);
+       exit(99);
+     }
+   }
+   //remove the file, ignore error if already removed
+   if (unlink (TESTFILE) != 0 )
+   {
+     if (errno !=  ENOENT) 
+     {
+       fprintf(logFile,"unlink failed. Function not tested\n");
+       fclose(logFile);
+       exit(99);
+     }
+   }
+
+   if((fd = open (TESTFILE, O_WRONLY | O_CREAT | O_TRUNC, 0644))==-1)
+   {
+     fprintf(logFile,"b_ptr_file datatype not setup properly - open failed. Function not tested\n");
+     fclose(logFile);
+     exit(99);
+   }]]>
+  </block>
+  <block dials="EMPTY">
+   <![CDATA[empty_flag = 1;]]>
+  </block>
+  <block dials="READ, READ_PLUS, APPEND, APPEND_PLUS">
+   <![CDATA[if (! empty_flag)
+     {
+       write (fd, "I am a test file.\n", 18);
+     }]]>
+  </block>
+  <block>
+   <![CDATA[if (close (fd)!=0) 
+   {
+     fprintf(logFile,"b_ptr_file datatype not setup properly - close failed. Function not tested\n");
+     fclose(logFile);
+     exit(99);	
+   }]]>
+  </block>
+  <block dials="READ">
+   <![CDATA[fileMode[0] = 'r';
+    oflag = O_RDONLY;]]>
+  </block>
+  <block dials="WRITE">
+   <![CDATA[fileMode[0] = 'w';
+    oflag = O_WRONLY | O_CREAT | O_TRUNC;]]>
+  </block>
+  <block dials="APPEND">
+   <![CDATA[fileMode[0] = 'a';
+    oflag = O_WRONLY | O_CREAT | O_APPEND;]]>
+  </block>
+  <block dials="READ_PLUS">
+   <![CDATA[fileMode[0] = 'r';
+    fileMode[1] = '+';
+    oflag = O_RDWR;]]>
+  </block>
+  <block dials="WRITE_PLUS">
+   <![CDATA[fileMode[0] = 'w';
+    fileMode[1] = '+';
+    oflag = O_RDWR | O_CREAT | O_TRUNC;]]>
+  </block>
+  <block dials="APPEND_PLUS">
+   <![CDATA[fileMode[0] = 'a';
+    fileMode[1] = '+';
+    oflag = O_RDWR | O_CREAT | O_APPEND;]]>
+  </block>
+  <block dials="R_USER">
+   <![CDATA[permissionMode = S_IRUSR;]]>
+  </block>
+  <block dials="W_USER">
+   <![CDATA[permissionMode = S_IWUSR;]]>
+  </block>
+  <block dials="X_USER">
+   <![CDATA[permissionMode = S_IXUSR;]]>
+  </block>
+  <block dials="RWX_USER">
+   <![CDATA[permissionMode = S_IRWXU;]]>
+  </block>
+  <block dials="R_GRP">
+   <![CDATA[permissionMode = S_IRGRP;]]>
+  </block>
+  <block dials="NONE">
+   <![CDATA[permissionMode = 0;]]>
+  </block>
+  <block>
+   <![CDATA[if ((fd  = open(TESTFILE, oflag, permissionMode)) == -1)
+  {
+    fprintf(logFile,"b_ptr_file datatype not setup properly - open failed\n");
+    fclose(logFile);
+    exit (99);
+  }]]>
+  </block>
+  <block dials="WRITE, WRITE_PLUS">
+   <![CDATA[if (! empty_flag)
+    {
+      write (fd, "I am a test file.\n", 18);
+    }]]>
+  </block>
+  <block dials="BEGINNING">
+   <![CDATA[if ((pos = lseek(fd, 0L, SEEK_SET)) == -1L)
+    {
+      fprintf(logFile,"b_ptr_file datatype not setup properly - lseek SET failed\n");
+      fclose(logFile);
+      exit (99);     
+    }]]>
+  </block>
+  <block dials="EOF">
+   <![CDATA[if ((pos = lseek(fd, 0L, SEEK_END)) == -1L)
+    {
+      fprintf(logFile,"b_ptr_file datatype not setup properly - lseek END failed\n");
+      fclose(logFile);
+      exit (99);
+    }]]>
+  </block>
+  <block dials="PAST_EOF">
+   <![CDATA[if ((pos = lseek(fd, 10L, SEEK_END)) == -1L)
+    {
+      fprintf(logFile,"b_ptr_file datatype not setup properly - lseek END failed\n");
+      fclose(logFile);
+      exit (99);
+    }]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = fdopen(fd,fileMode);
+  if (_theVariable == NULL)
+  {
+    fprintf(logFile,"b_ptr_file datatype not setup properly - fdopen TESTFILE failed. Function not tested\n");
+    fclose(logFile);
+    exit(99);
+  }
+
+  fclose (logFile);]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[FILE* logFile = NULL;
+
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }]]>
+  </block>
+  <block dials="CLOSED">
+   <![CDATA[fclose(_theVariable);]]>
+  </block>
+  <block dials="DELETED">
+   <![CDATA[// try deleting without closing the file first
+    char buffer[128];
+    if ((sprintf(buffer, "rm %s", TESTFILE)) <= 0)
+    {
+      fprintf(logFile,"b_ptr_file datatype not setup properly - rm of the TESTFILE failed. Function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    system(buffer);
+    // system("ls testdir/testfil* >> testdir/deleteDebug.txt");]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[FILE* logFile = NULL;
+
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }]]>
+  </block>
+  <block dials="CLOSED, EXIST">
+   <![CDATA[chown(TESTFILE, getuid(), getgid()); //attempt to change ownership
+    chmod(TESTFILE,  S_IRUSR|S_IWUSR|S_IROTH|S_IWOTH);//permits others to read/write; ignore errors
+    if (fclose (_theVariable)!=0) 
+    {       //ignore error if file already closed
+      if (errno != EBADF) perror("close fname_tempfd");
+    }]]>
+  </block>
+  <block>
+   <![CDATA[if (unlink(TESTFILE)!=0)
+  {
+    //ignore error if already removed.
+    if (errno != ENOENT) 
+    {
+      fprintf(logFile,"unlink fname_testfilename\n");
+    }
+  }
+
+  //also try to rmdir it because it may be a directory. ignore error messages
+  rmdir(TESTFILE);
+  fclose(logFile);]]>
+  </block>
+ </cleanup>
+</dt>

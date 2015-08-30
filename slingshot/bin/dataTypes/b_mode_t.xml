@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_mode_t
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  mode_t
+ </dt_type>
+ <dial_groups order="OWNER;GROUP;OTHER;S_ISUID;S_ISGID">
+  <group name="GROUP">
+   <dial>
+    G_READ
+   </dial>
+   <dial>
+    G_WRITE
+   </dial>
+   <dial>
+    G_EXEC
+   </dial>
+   <dial>
+    G_NONE
+   </dial>
+  </group>
+  <group name="S_ISUID">
+   <dial>
+    UID_SET
+   </dial>
+   <dial>
+    UID_CLEAR
+   </dial>
+  </group>
+  <group name="OTHER">
+   <dial>
+    O_READ
+   </dial>
+   <dial>
+    O_WRITE
+   </dial>
+   <dial>
+    O_EXEC
+   </dial>
+   <dial>
+    O_NONE
+   </dial>
+  </group>
+  <group name="OWNER">
+   <dial>
+    U_READ
+   </dial>
+   <dial>
+    U_WRITE
+   </dial>
+   <dial>
+    U_EXEC
+   </dial>
+   <dial>
+    U_RWX
+   </dial>
+   <dial>
+    U_NONE
+   </dial>
+  </group>
+  <group name="S_ISGID">
+   <dial>
+    GID_SET
+   </dial>
+   <dial>
+    GID_CLEAR
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <fcntl.h>
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[_theVariable = 0;]]>
+  </block>
+  <block dials="U_READ">
+   <![CDATA[_theVariable = (_theVariable | S_IRUSR);]]>
+  </block>
+  <block dials="U_WRITE">
+   <![CDATA[_theVariable = (_theVariable | S_IWUSR);]]>
+  </block>
+  <block dials="U_EXEC">
+   <![CDATA[_theVariable = (_theVariable | S_IXUSR);]]>
+  </block>
+  <block dials="U_RWX">
+   <![CDATA[_theVariable = (_theVariable | S_IRUSR | S_IWUSR | S_IXUSR);]]>
+  </block>
+  <block dials="G_READ">
+   <![CDATA[_theVariable = (_theVariable | S_IRGRP);]]>
+  </block>
+  <block dials="G_WRITE">
+   <![CDATA[_theVariable = (_theVariable | S_IWGRP);]]>
+  </block>
+  <block dials="G_EXEC">
+   <![CDATA[_theVariable = (_theVariable | S_IXGRP);]]>
+  </block>
+  <block dials="O_READ">
+   <![CDATA[_theVariable = (_theVariable | S_IROTH);]]>
+  </block>
+  <block dials="O_WRITE">
+   <![CDATA[_theVariable = (_theVariable | S_IWOTH);]]>
+  </block>
+  <block dials="O_EXEC">
+   <![CDATA[_theVariable = (_theVariable | S_IXOTH);]]>
+  </block>
+  <block dials="UID_SET">
+   <![CDATA[_theVariable = (_theVariable | S_ISUID);]]>
+  </block>
+  <block dials="GID_SET">
+   <![CDATA[_theVariable = (_theVariable | S_ISGID);]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_fname
+ </name>
+ <parent>
+  b_ptr_char
+ </parent>
+ <dt_type>
+  char*
+ </dt_type>
+ <dial_groups order="PERMISSIONS;STATE;CONTENTS;NAME">
+  <group name="STATE">
+   <dial>
+    NOT_EXIST_FILE
+   </dial>
+   <dial>
+    NOT_EXIST_DIR
+   </dial>
+   <dial>
+    OPEN_WRITE
+   </dial>
+   <dial>
+    OPEN_READ
+   </dial>
+   <dial>
+    CLOSED
+   </dial>
+   <dial>
+    LINK
+   </dial>
+  </group>
+  <group name="NAME">
+   <dial>
+    LOCAL
+   </dial>
+   <dial>
+    TMP
+   </dial>
+   <dial>
+    EMBEDDED_SPACE
+   </dial>
+   <dial>
+    LONG
+   </dial>
+   <dial>
+    SPECIAL_CHAR
+   </dial>
+   <dial>
+    DIR
+   </dial>
+  </group>
+  <group name="CONTENTS">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    NON_EMPTY
+   </dial>
+  </group>
+  <group name="PERMISSIONS">
+   <dial>
+    R_USER
+   </dial>
+   <dial>
+    W_USER
+   </dial>
+   <dial>
+    X_USER
+   </dial>
+   <dial>
+    RWX_USER
+   </dial>
+   <dial>
+    R_GRP
+   </dial>
+   <dial>
+    NONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include "bTypes.h"
+#include "b_ptr_char.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define TESTDIR "testdir/"
+#define TESTFILE	"testdir/testfile_fname"
+#define TESTSUBDIR "testdir/testsubdir_fname"
+
+#define BMAX_STR 1028
+static FILE* filePtr = NULL;
+static char *fnameString = NULL;
+static char *cp_fnameStr = NULL;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[char fname[128];
+  char tempStr[64];
+  char linkName[BMAX_STR +4];
+
+  int dirFlag = 0;
+  int emptyFlag = 0;
+  int linkFlag = 0;
+
+  mode_t permissionMode = 777;
+
+  static int fname_count = 0;	/* count for multiple instances	*/
+  char fname_count_str [127];	/* count, in string format	*/
+
+  // Setup log file for template information
+
+  FILE* logFile = NULL;
+
+  if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+  {
+    exit(99);
+  }
+  //fprintf (logFile, "\nNEW TEST \n");
+
+
+   
+  if (mkdir(TESTDIR,S_IRWXU|S_IRWXG|S_IRWXO)!=0)	/* create test directory, u+rwx */
+  {
+    //if the directory already exists ignore the error
+    if (errno != EEXIST) 
+    {
+      fprintf(logFile, "problems creating test directory - b_fname\n");
+      fclose(logFile);
+      exit(99);
+    }
+  }
+  
+  // cleanup existing files - should only be necessary if testing stopped midstream
+  system("rm -rf testdir/testfile_fname*");
+  system("rm -rf testdir/testsubdir_fname");
+  system ("rm -rf /tmp/ballista_test_b_fname*");]]>
+  </block>
+  <block dials="R_USER">
+   <![CDATA[permissionMode = 0400;]]>
+  </block>
+  <block dials="W_USER">
+   <![CDATA[permissionMode = 0200;]]>
+  </block>
+  <block dials="X_USER">
+   <![CDATA[permissionMode = 0100;]]>
+  </block>
+  <block dials="RWX_USER">
+   <![CDATA[permissionMode = 0700;]]>
+  </block>
+  <block dials="R_GRP">
+   <![CDATA[permissionMode = 0040;]]>
+  </block>
+  <block dials="NONE">
+   <![CDATA[permissionMode = 0000;]]>
+  </block>
+  <block dials="LOCAL">
+   <![CDATA[fnameString = fname;
+    strcpy(fnameString,TESTFILE);]]>
+  </block>
+  <block dials="DIR">
+   <![CDATA[fnameString = fname;
+    strcpy(fnameString,TESTSUBDIR);]]>
+  </block>
+  <block dials="EMBEDDED_SPACE">
+   <![CDATA[fnameString = fname;
+    strcpy(fnameString,TESTFILE);
+    strcat(fnameString,"_Embedded Space");]]>
+  </block>
+  <block dials="LONG">
+   <![CDATA[fnameString = (char*) malloc(sizeof(char) * BMAX_STR);
+    if (fnameString == NULL)
+    { 
+      fprintf (logFile, "b_fname LONG - malloc failed - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy(fnameString, TESTFILE);
+    int i;
+    for (i = strlen(fnameString); i < (BMAX_STR -2); i++)
+    {
+       fnameString[i] = 'a';
+    }
+    fnameString[BMAX_STR-1] = '\0';]]>
+  </block>
+  <block dials="SPECIAL_CHAR">
+   <![CDATA[fnameString = fname;
+    strcpy(fnameString,TESTFILE);
+    strcat(fnameString,"_SPECIAL!@#$%^&*(){}[]<>?/-CHAR");]]>
+  </block>
+  <block dials="TMP">
+   <![CDATA[fnameString = fname;
+    strcpy(fnameString,"/tmp/ballista_test_b_fname");]]>
+  </block>
+  <block dials="EMPTY">
+   <![CDATA[emptyFlag = 1;]]>
+  </block>
+  <block dials="NON_EMPTY">
+   <![CDATA[emptyFlag = 0;]]>
+  </block>
+  <block dials="NOT_EXIST_FILE">
+   <![CDATA[strcpy(tempStr, "rm -f ");
+    strcat(tempStr, fnameString);
+    _theVariable = fnameString;]]>
+  </block>
+  <block dials="NOT_EXIST_DIR">
+   <![CDATA[strcpy(tempStr, "rm -rf ");
+    strcat(tempStr, TESTDIR);
+    system(tempStr);
+    _theVariable = fnameString;]]>
+  </block>
+  <block dials="LINK">
+   <![CDATA[linkFlag = 1;]]>
+  </block>
+  <block dials="OPEN_WRITE, OPEN_READ, CLOSED, LINK">
+   <![CDATA[// Create the file with the data  - chmod later for proper permissions
+    if (!linkFlag)
+    {
+      filePtr = fopen(fnameString, "w+");
+    }
+    else
+    {
+      strcpy(linkName,fnameString);
+      strcat(linkName,"LINK");
+      filePtr = fopen(linkName, "w+");
+    }      
+    if (filePtr == NULL)
+    {
+      fprintf(logFile, "b_fname OPEN_WRITE, OPEN_READ, LINK, or CLOSED had problems opening file %s - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    } 
+
+    if (!emptyFlag)
+    {
+      fprintf(filePtr, "This is a test file!\n");
+    }
+    fclose(filePtr);
+
+    if(!linkFlag)
+    {    
+      chmod(fnameString, permissionMode);
+    }
+    else
+    {
+      chmod(linkName, permissionMode);
+    }]]>
+  </block>
+  <block dials="OPEN_READ">
+   <![CDATA[filePtr = fopen(fnameString, "r+");
+    if (filePtr == NULL)
+    {
+      fprintf(logFile, "b_fname OPEN_READ had problems opening file %s - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = fnameString;]]>
+  </block>
+  <block dials="OPEN_WRITE">
+   <![CDATA[filePtr = fopen(fnameString, "w+");
+    if (filePtr == NULL)
+    {
+      fprintf(logFile, "b_fname OPEN_WRITE had problems opening file - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = fnameString;]]>
+  </block>
+  <block dials="LINK">
+   <![CDATA[if (link(linkName,fnameString) == -1)
+    {
+      fprintf(logFile,"b_fname LINK -error creating link - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    chmod(fnameString, permissionMode);
+    _theVariable = fnameString;]]>
+  </block>
+  <block>
+   <![CDATA[cp_fnameStr = fnameString;
+  fclose(logFile);]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup>
+  <block dials="OPEN_READ, OPEN_WRITE">
+   <![CDATA[fclose(filePtr);]]>
+  </block>
+  <block dials="LINK">
+   <![CDATA[unlink(cp_fnameStr);]]>
+  </block>
+  <block dials="LONG">
+   <![CDATA[free(cp_fnameStr);]]>
+  </block>
+  <block>
+   <![CDATA[system ("rm -rf testdir/testfile_fname*");
+  system ("rm -rf testdir/testsubdir_fname");
+  rmdir(TESTDIR);]]>
+  </block>
+  <block dials="TMP">
+   <![CDATA[system ("rm -rf /tmp/ballista_test_b_fname*");]]>
+  </block>
+ </cleanup>
+</dt>

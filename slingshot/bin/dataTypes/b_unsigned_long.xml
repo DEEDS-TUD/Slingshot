@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_unsigned_long
+ </name>
+ <parent>
+  b_unsigned_int
+ </parent>
+ <dt_type>
+  Ulong
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    MAXULONG
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#define Ulong unsigned long
+   #include "limits.h"
+   #include "b_unsigned_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXULONG">
+   <![CDATA[_theVariable= ULONG_MAX;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

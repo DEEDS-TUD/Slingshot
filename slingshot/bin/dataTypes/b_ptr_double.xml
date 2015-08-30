@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_double
+ </name>
+ <parent>
+  b_ptr_float
+ </parent>
+ <dt_type>
+  double*
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    DMAXEXP
+   </dial>
+   <dial>
+    MAXDOUBLE
+   </dial>
+   <dial>
+    MINDOUBLE
+   </dial>
+   <dial>
+    NEGMAXDOUBLE
+   </dial>
+   <dial>
+    NEGMINDOUBLE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[//double: usually 8 bytes(64bits). sizeof(double)=8  15-16bit mantissa
+//for more read /usr/include/values.h
+   #include "b_ptr_float.h"
+   #include "math.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static double temp_double;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="DMAXEXP">
+   <![CDATA[temp_double = DMAXEXP;]]>
+  </block>
+  <block dials="MAXDOUBLE">
+   <![CDATA[temp_double = MAXDOUBLE;]]>
+  </block>
+  <block dials="MINDOUBLE">
+   <![CDATA[temp_double = MINDOUBLE;]]>
+  </block>
+  <block dials="NEGMAXDOUBLE">
+   <![CDATA[temp_double = -MAXDOUBLE;]]>
+  </block>
+  <block dials="NEGMINDOUBLE">
+   <![CDATA[temp_double = -MINDOUBLE;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &temp_double;]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </cleanup>
+</dt>

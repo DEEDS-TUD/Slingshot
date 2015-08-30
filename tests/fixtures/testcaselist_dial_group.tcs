@@ -1,0 +1,2 @@
+wctomb b_ptr_char b_wchar; b_ptr_char (S1 CHAR EMPTY); b_wchar (WCHAR_MAX)
+wctomb b_ptr_char b_wchar; b_ptr_char (S1 CHAR EMPTY); b_wchar (WCHAR_MIN)

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_tms
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structtmsptr
+ </dt_type>
+ <dial_groups order="TMSPTR">
+  <group name="TMSPTR">
+   <dial>
+    THIS
+   </dial>
+   <dial>
+    ALL_ZERO
+   </dial>
+   <dial>
+    ALL_ONE
+   </dial>
+   <dial>
+    ALL_MAX
+   </dial>
+   <dial>
+    ALL_NEGONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sys/times.h>
+
+#include "bTypes.h"
+#include "b_ptr_buf.h"
+#define structtmsptr struct tms*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct tms tmp_tms;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[// Setup log file for template information
+
+   FILE* logFile = NULL;
+
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }]]>
+  </block>
+  <block dials="THIS">
+   <![CDATA[if((times(&tmp_tms)) == (clock_t)-1)
+     {
+        fprintf(logFile, "b_ptr_tms - THIS: times() failed. Function not tested\n");
+        fclose(logFile);
+        exit(99);
+     }]]>
+  </block>
+  <block dials="ALL_ZERO">
+   <![CDATA[tmp_tms.tms_utime=0;              /* user time */
+     tmp_tms.tms_stime=0;              /* system time */
+     tmp_tms.tms_cutime=0;             /* user time, children */
+     tmp_tms.tms_cstime=0;             /* system time, children */]]>
+  </block>
+  <block dials="ALL_ONE">
+   <![CDATA[tmp_tms.tms_utime=1;              /* user time */
+     tmp_tms.tms_stime=1;              /* system time */
+     tmp_tms.tms_cutime=1;             /* user time, children */
+     tmp_tms.tms_cstime=1;             /* system time, children */]]>
+  </block>
+  <block dials="ALL_MAX">
+   <![CDATA[tmp_tms.tms_utime=MAXINT;              /* user time */
+     tmp_tms.tms_stime=MAXINT;              /* system time */
+     tmp_tms.tms_cutime=MAXINT;             /* user time, children */
+     tmp_tms.tms_cstime=MAXINT;             /* system time, children */]]>
+  </block>
+  <block dials="ALL_NEGONE">
+   <![CDATA[tmp_tms.tms_utime=-1;              /* user time */
+     tmp_tms.tms_stime=-1;              /* system time */
+     tmp_tms.tms_cutime=-1;             /* user time, children */
+     tmp_tms.tms_cstime=-1;             /* system time, children */]]>
+  </block>
+  <block>
+   <![CDATA[fclose(logFile);
+   _theVariable = &tmp_tms;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

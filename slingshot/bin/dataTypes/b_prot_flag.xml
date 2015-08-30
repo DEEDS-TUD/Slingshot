@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_prot_flag
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    READ
+   </dial>
+   <dial>
+    WRITE
+   </dial>
+   <dial>
+    EXEC
+   </dial>
+   <dial>
+    ALL
+   </dial>
+   <dial>
+    NONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <sys/mman.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="READ">
+   <![CDATA[_theVariable= PROT_READ;]]>
+  </block>
+  <block dials="WRITE">
+   <![CDATA[_theVariable= PROT_WRITE;]]>
+  </block>
+  <block dials="EXEC">
+   <![CDATA[_theVariable= PROT_EXEC;]]>
+  </block>
+  <block dials="ALL">
+   <![CDATA[_theVariable= PROT_READ | PROT_WRITE | PROT_EXEC;]]>
+  </block>
+  <block dials="NONE">
+   <![CDATA[_theVariable= PROT_NONE;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

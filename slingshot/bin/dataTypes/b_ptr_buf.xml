@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_buf
+ </name>
+ <parent>
+  b_ptr_void
+ </parent>
+ <dt_type>
+  void*
+ </dt_type>
+ <dial_groups order="BUF_SIZE">
+  <group name="BUF_SIZE">
+   <dial>
+    BUF_SMALL
+   </dial>
+   <dial>
+    BUF_MED
+   </dial>
+   <dial>
+    BUF_LARGE
+   </dial>
+   <dial>
+    BUF_XLARGE
+   </dial>
+   <dial>
+    BUF_HUGE
+   </dial>
+   <dial>
+    BUFMAX
+   </dial>
+   <dial>
+    BUF_64k
+   </dial>
+   <dial>
+    BUF_END_MED
+   </dial>
+   <dial>
+    BUF_FAR_PAST
+   </dial>
+   <dial>
+    BUF_ODD
+   </dial>
+   <dial>
+    BUF_FREED
+   </dial>
+   <dial>
+    BUF_CODE
+   </dial>
+   <dial>
+    BUF_LOW
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <stdlib.h>
+#include <values.h>
+#include <limits.h>
+#include "bTypes.h"
+#include "b_ptr_void.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define bm_PAGESIZE 4096
+#define fillbuf(buf,len)   for (int i=0; i<len; i++) buf[i] = 'a'
+static char *save_loc_buf = NULL;	
+
+// a generic function to eat up clock cycles, and give us something
+//  to point to
+    int fib(int i) 
+    {
+	if (i <= 1) 
+   	{
+		return (1);
+   	} 
+   	else 
+   	{
+     	return (fib(i-1) + fib(i-2));
+   	}
+    }]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[char *buf_ptr;
+   const int buf_SMALL = 1;             /* size of small buf */
+   const int buf_MED = bm_PAGESIZE;     /* size of medium buf */
+
+   // Setup log file for template information
+
+   FILE* logFile = NULL;
+
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      fclose(logFile);
+      exit(99);
+   }]]>
+  </block>
+  <block dials="BUF_SMALL">
+   <![CDATA[save_loc_buf = buf_ptr = (char *) malloc (buf_SMALL);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_SMALL, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, buf_SMALL);
+    _theVariable = buf_ptr;]]>
+  </block>
+  <block dials="BUF_MED">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc (buf_MED);  /* try to put this on a page boundary */
+    if(buf_ptr == NULL)
+    {
+        fprintf(logFile, "malloc failed in b_ptr_buf - BUF_MED, function not tested\n");
+	fclose(logFile);
+        exit(99);
+    }
+    fillbuf(buf_ptr, buf_MED);
+    _theVariable = buf_ptr;]]>
+  </block>
+  <block dials="BUF_LARGE">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc ((1 << 29) + 1);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_LARGE, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    /* don't fill this one because it takes too long */
+    _theVariable = buf_ptr;]]>
+  </block>
+  <block dials="BUF_XLARGE">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc ((1 << 30) + 1);
+   if(buf_ptr == NULL)
+   {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_XLARGE, function not tested\n");
+	fclose(logFile);
+	exit(99);
+   }
+   /* don't fill this one because it takes too long */
+   _theVariable= buf_ptr;]]>
+  </block>
+  <block dials="BUF_HUGE">
+   <![CDATA[save_loc_buf = buf_ptr =(char *) malloc (( 1 << 31) + 1);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_HUGE, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    /* don't fill this one because it takes too long */
+    _theVariable= buf_ptr;]]>
+  </block>
+  <block dials="BUFMAX">
+   <![CDATA[save_loc_buf = buf_ptr =(char *) malloc (ULONG_MAX);
+    if(buf_ptr == NULL)
+    {
+        fprintf(logFile, "malloc failed in b_ptr_buf - BUFMAX, function not tested\n");
+	fclose(logFile);
+        exit(99);
+    }
+    /* don't fill this one because it takes too long */
+    _theVariable= buf_ptr;]]>
+  </block>
+  <block dials="BUF_64k">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc ((1 << 16) + 1);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_64K, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, (1 << 16) + 1);
+    _theVariable = buf_ptr;]]>
+  </block>
+  <block dials="BUF_END_MED">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc (buf_MED);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_END_MED, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, buf_MED);
+    _theVariable = (void *) (((unsigned long) buf_ptr) + buf_MED - 1);]]>
+  </block>
+  <block dials="BUF_FAR_PAST">
+   <![CDATA[save_loc_buf = buf_ptr = (char *)malloc (buf_MED);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_FAR_PAST, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, buf_MED);
+    _theVariable = (void *) (((unsigned long) buf_ptr) + (bm_PAGESIZE * 1000));]]>
+  </block>
+  <block dials="BUF_ODD">
+   <![CDATA[save_loc_buf = buf_ptr =  (char *)malloc (buf_MED);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_ODD, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, buf_MED);
+    _theVariable = (void *) (((unsigned long) buf_ptr) + 1);]]>
+  </block>
+  <block dials="BUF_FREED">
+   <![CDATA[save_loc_buf = buf_ptr =  (char *)malloc (buf_MED);
+    if(buf_ptr == NULL)
+    {
+	fprintf(logFile, "malloc failed in b_ptr_buf - BUF_FREED, function not tested\n");
+	fclose(logFile);
+	exit(99);
+    }
+    fillbuf(buf_ptr, buf_MED);]]>
+  </block>
+  <block dials="BUF_CODE">
+   <![CDATA[_theVariable = (void *) &fib;]]>
+  </block>
+  <block dials="BUF_LOW">
+   <![CDATA[_theVariable = (void *) 16;]]>
+  </block>
+  <block>
+   <![CDATA[fclose(logFile);]]>
+  </block>
+ </access>
+ <commit>
+  <block dials="BUF_FREED">
+   <![CDATA[free (save_loc_buf);
+    _theVariable = save_loc_buf;]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[if (save_loc_buf != NULL) 
+   {
+      free(save_loc_buf);
+   }]]>
+  </block>
+ </cleanup>
+</dt>

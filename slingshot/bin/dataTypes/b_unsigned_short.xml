@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_unsigned_short
+ </name>
+ <parent>
+  b_short_int_common
+ </parent>
+ <dt_type>
+  Ushort
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    MAXSHORTPLUS1
+   </dial>
+   <dial>
+    MAXUSHORT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_short_int_common.h"
+   #define Ushort unsigned short]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXSHORTPLUS1">
+   <![CDATA[_theVariable = MAXSHORT + 1;]]>
+  </block>
+  <block dials="MAXUSHORT">
+   <![CDATA[_theVariable= MAXSHORT * 2 +1;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

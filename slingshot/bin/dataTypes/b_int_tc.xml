@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_tc
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    TCIFLUSH
+   </dial>
+   <dial>
+    TCSANOW
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <termios.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="TCIFLUSH">
+   <![CDATA[_theVariable= TCIFLUSH;]]>
+  </block>
+  <block dials="TCSANOW">
+   <![CDATA[_theVariable= TCSANOW;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

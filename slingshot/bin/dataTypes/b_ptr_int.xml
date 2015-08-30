@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_int
+ </name>
+ <parent>
+  b_ptr_void
+ </parent>
+ <dt_type>
+  int*
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    ONE
+   </dial>
+   <dial>
+    MININT
+   </dial>
+   <dial>
+    NEG_ONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_void.h"
+#include "bTypes.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static int temp_int;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="ZERO">
+   <![CDATA[temp_int = 0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[temp_int = 1;]]>
+  </block>
+  <block dials="MININT">
+   <![CDATA[temp_int = -MAXINT-1;]]>
+  </block>
+  <block dials="NEG_ONE">
+   <![CDATA[temp_int = -1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &temp_int;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

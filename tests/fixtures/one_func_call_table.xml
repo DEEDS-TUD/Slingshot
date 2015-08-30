@@ -1,0 +1,9 @@
+<callTable>
+  <function>
+    <name>access</name>
+    <header>unistd.h</header>
+    <return>int</return>
+    <param>b_fname</param>
+    <param>b_int_amode</param>
+  </function>
+</callTable>

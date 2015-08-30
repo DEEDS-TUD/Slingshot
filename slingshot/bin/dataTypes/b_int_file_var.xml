@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_file_var
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    NAME_MAX
+   </dial>
+   <dial>
+    SYNC_IO
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="NAME_MAX">
+   <![CDATA[_theVariable= _PC_NAME_MAX;]]>
+  </block>
+  <block dials="SYNC_IO">
+   <![CDATA[_theVariable= _PC_SYNC_IO;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_signal
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    SIGILL
+   </dial>
+   <dial>
+    SIGABRT
+   </dial>
+   <dial>
+    SIGSEGV
+   </dial>
+   <dial>
+    SIGINT
+   </dial>
+   <dial>
+    SIGCHLD
+   </dial>
+   <dial>
+    SIGRTMIN
+   </dial>
+   <dial>
+    SIGRTMAX
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <signal.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SIGILL">
+   <![CDATA[_theVariable= SIGILL;]]>
+  </block>
+  <block dials="SIGABRT">
+   <![CDATA[_theVariable= SIGABRT;]]>
+  </block>
+  <block dials="SIGSEGV">
+   <![CDATA[_theVariable= SIGSEGV;]]>
+  </block>
+  <block dials="SIGINT">
+   <![CDATA[_theVariable= SIGINT;]]>
+  </block>
+  <block dials="SIGCHLD">
+   <![CDATA[_theVariable= SIGCHLD;]]>
+  </block>
+  <block dials="SIGRTMIN">
+   <![CDATA[_theVariable= SIGRTMIN;]]>
+  </block>
+  <block dials="SIGRTMAX">
+   <![CDATA[_theVariable= SIGRTMAX;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_utimbuf
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structUtimbufPtr
+ </dt_type>
+ <dial_groups order="ACTIME;MODTIME">
+  <group name="MODTIME">
+   <dial>
+    M_NOW
+   </dial>
+   <dial>
+    M_TOMORROW
+   </dial>
+   <dial>
+    M_NEXTWEEK
+   </dial>
+   <dial>
+    M_NEXTMONTH
+   </dial>
+   <dial>
+    M_NEXTYEAR
+   </dial>
+   <dial>
+    M_NEXTDECADE
+   </dial>
+   <dial>
+    M_NEXTCENTURY
+   </dial>
+   <dial>
+    M_NEXTMILLENIUM
+   </dial>
+   <dial>
+    M_Y2K
+   </dial>
+   <dial>
+    M_Y2K_MINUS_ONE
+   </dial>
+   <dial>
+    M_Y2K_PLUS_ONE
+   </dial>
+   <dial>
+    M_MAX
+   </dial>
+   <dial>
+    M_MIN
+   </dial>
+  </group>
+  <group name="ACTIME">
+   <dial>
+    A_NOW
+   </dial>
+   <dial>
+    A_TOMORROW
+   </dial>
+   <dial>
+    A_NEXTWEEK
+   </dial>
+   <dial>
+    A_NEXTMONTH
+   </dial>
+   <dial>
+    A_NEXTYEAR
+   </dial>
+   <dial>
+    A_NEXTDECADE
+   </dial>
+   <dial>
+    A_NEXTCENTURY
+   </dial>
+   <dial>
+    A_NEXTMILLENIUM
+   </dial>
+   <dial>
+    A_Y2K
+   </dial>
+   <dial>
+    A_Y2K_MINUS_ONE
+   </dial>
+   <dial>
+    A_Y2K_PLUS_ONE
+   </dial>
+   <dial>
+    A_MAX
+   </dial>
+   <dial>
+    A_MIN
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#define structUtimbufPtr struct utimbuf *
+#include <sys/types.h>
+#include <sys/time.h>
+#include <utime.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define MIDNIGHT_2000 (2000-1970)*365*24*60*60   
+#define YEAR 365*24*60*60
+#define DAY 24*60*60
+#define HOUR 60*60
+#define MINUTE 60
+static struct utimbuf tmp_utimbuf;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[tmp_utimbuf.actime = time(NULL);//initialized to NOW
+tmp_utimbuf.modtime = time(NULL);]]>
+  </block>
+  <block dials="A_NOW">
+   <![CDATA[]]>
+  </block>
+  <block dials="A_TOMORROW">
+   <![CDATA[tmp_utimbuf.actime += DAY;]]>
+  </block>
+  <block dials="A_NEXTWEEK">
+   <![CDATA[tmp_utimbuf.actime += (DAY*7);]]>
+  </block>
+  <block dials="A_NEXTMONTH">
+   <![CDATA[tmp_utimbuf.actime += (DAY*30);]]>
+  </block>
+  <block dials="A_NEXTYEAR">
+   <![CDATA[tmp_utimbuf.actime += YEAR;]]>
+  </block>
+  <block dials="A_NEXTDECADE">
+   <![CDATA[tmp_utimbuf.actime += (YEAR*10);]]>
+  </block>
+  <block dials="A_NEXTCENTURY">
+   <![CDATA[tmp_utimbuf.actime += (YEAR*100);]]>
+  </block>
+  <block dials="A_NEXTMILLENIUM">
+   <![CDATA[tmp_utimbuf.actime += (YEAR*1000);]]>
+  </block>
+  <block dials="A_Y2K">
+   <![CDATA[tmp_utimbuf.actime = MIDNIGHT_2000;]]>
+  </block>
+  <block dials="A_Y2K_MINUS_ONE">
+   <![CDATA[tmp_utimbuf.actime = MIDNIGHT_2000-1;]]>
+  </block>
+  <block dials="A_Y2K_PLUS_ONE">
+   <![CDATA[tmp_utimbuf.actime = MIDNIGHT_2000+1;]]>
+  </block>
+  <block dials="A_MAX">
+   <![CDATA[tmp_utimbuf.actime = MAXINT;]]>
+  </block>
+  <block dials="A_MIN">
+   <![CDATA[tmp_utimbuf.actime = - MAXINT;]]>
+  </block>
+  <block dials="M_NOW">
+   <![CDATA[]]>
+  </block>
+  <block dials="M_TOMORROW">
+   <![CDATA[tmp_utimbuf.modtime += DAY;]]>
+  </block>
+  <block dials="M_NEXTWEEK">
+   <![CDATA[tmp_utimbuf.modtime += (DAY*7);]]>
+  </block>
+  <block dials="M_NEXTMONTH">
+   <![CDATA[tmp_utimbuf.modtime += (DAY*30);]]>
+  </block>
+  <block dials="M_NEXTYEAR">
+   <![CDATA[tmp_utimbuf.modtime += YEAR;]]>
+  </block>
+  <block dials="M_NEXTDECADE">
+   <![CDATA[tmp_utimbuf.modtime += (YEAR*10);]]>
+  </block>
+  <block dials="M_NEXTCENTURY">
+   <![CDATA[tmp_utimbuf.modtime += (YEAR*100);]]>
+  </block>
+  <block dials="M_NEXTMILLENIUM">
+   <![CDATA[tmp_utimbuf.modtime += (YEAR*1000);]]>
+  </block>
+  <block dials="M_Y2K">
+   <![CDATA[tmp_utimbuf.modtime = MIDNIGHT_2000;]]>
+  </block>
+  <block dials="M_Y2K_MINUS_ONE">
+   <![CDATA[tmp_utimbuf.modtime = MIDNIGHT_2000-1;]]>
+  </block>
+  <block dials="M_Y2K_PLUS_ONE">
+   <![CDATA[tmp_utimbuf.modtime = MIDNIGHT_2000+1;]]>
+  </block>
+  <block dials="M_MAX">
+   <![CDATA[tmp_utimbuf.modtime = MAXINT;]]>
+  </block>
+  <block dials="M_MIN">
+   <![CDATA[tmp_utimbuf.modtime = - MAXINT;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &tmp_utimbuf;]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </cleanup>
+</dt>

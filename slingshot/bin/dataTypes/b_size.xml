@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_size
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="SIZE">
+  <group name="SIZE">
+   <dial>
+    SIZE_PAGEx16
+   </dial>
+   <dial>
+    SIZE_PAGEx16p1
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define bm_PAGESIZE getpagesize()]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SIZE_PAGEx16">
+   <![CDATA[_theVariable=16*bm_PAGESIZE;]]>
+  </block>
+  <block dials="SIZE_PAGEx16p1">
+   <![CDATA[_theVariable=16*bm_PAGESIZE+1;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

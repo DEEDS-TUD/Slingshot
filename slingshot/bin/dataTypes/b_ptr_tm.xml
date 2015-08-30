@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_tm
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  StructtmPtr
+ </dt_type>
+ <dial_groups order="TM_STRUCT_PTR">
+  <group name="TM_STRUCT_PTR">
+   <dial>
+    LOCALTIME_R_NOW
+   </dial>
+   <dial>
+    GMTIME_R_NOW
+   </dial>
+   <dial>
+    ALL_ZERO
+   </dial>
+   <dial>
+    ALL_TOP_RANGE
+   </dial>
+   <dial>
+    ALL_OVERFLOW
+   </dial>
+   <dial>
+    ALL_MAX
+   </dial>
+   <dial>
+    ALL_MIN
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <time.h>
+#include "bTypes.h"
+#include "b_ptr_buf.h"
+#define StructtmPtr struct tm*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct tm tm_struct;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[time_t time_since_epoch = time(NULL);
+
+   FILE* logFile = NULL;
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }]]>
+  </block>
+  <block dials="LOCALTIME_R_NOW">
+   <![CDATA[if((localtime_r(&time_since_epoch,&tm_struct))==NULL)
+        {
+	   fprintf(logFile, "LOCALTIME_R_NOW: localtime_r failed in b_ptr_tm. Function not tested\n");
+           fclose(logFile);
+ 	   exit(99);
+	}]]>
+  </block>
+  <block dials="GMTIME_R_NOW">
+   <![CDATA[if((gmtime_r(&time_since_epoch,&tm_struct))==NULL)
+        {
+	   fprintf(logFile, "GMTIME_R_NOW: gmtime_r failed in b_ptr_tm. Function not tested\n");
+           fclose(logFile);
+ 	   exit(99);
+	}]]>
+  </block>
+  <block dials="ALL_ZERO">
+   <![CDATA[tm_struct.tm_sec = 0; /* seconds after the minute [0-60] */
+       tm_struct.tm_min = 0;         /* minutes after the hour [0-59] */
+       tm_struct.tm_hour = 0;        /* hours since midnight [0-23] */
+       tm_struct.tm_mday = 0;        /* day of the month [1-31] */
+       tm_struct.tm_mon = 0;         /* months since January [0-11] */
+       tm_struct.tm_year = 0;        /* years since 1900 */
+       tm_struct.tm_wday = 0;        /* days since Sunday [0-6] */
+       tm_struct.tm_yday = 0;        /* days since January 1 [0-365] */
+       tm_struct.tm_isdst = 0;       /* Daylight Savings Time flag */]]>
+  </block>
+  <block dials="ALL_TOP_RANGE">
+   <![CDATA[tm_struct.tm_sec = 60; /* seconds after the minute [0-60] */
+       tm_struct.tm_min = 59;         /* minutes after the hour [0-59] */
+       tm_struct.tm_hour = 23;        /* hours since midnight [0-23] */
+       tm_struct.tm_mday = 31;        /* day of the month [1-31] */
+       tm_struct.tm_mon = 11;         /* months since January [0-11] */
+       tm_struct.tm_year = 9999;        /* years since 1900 */
+       tm_struct.tm_wday = 6;        /* days since Sunday [0-6] */
+       tm_struct.tm_yday = 365;        /* days since January 1 [0-365] */
+       tm_struct.tm_isdst = 1;       /* Daylight Savings Time flag */]]>
+  </block>
+  <block dials="ALL_OVERFLOW">
+   <![CDATA[tm_struct.tm_sec = 61; /* seconds after the minute [0-60] */
+       tm_struct.tm_min = 60;         /* minutes after the hour [0-59] */
+       tm_struct.tm_hour = 24;        /* hours since midnight [0-23] */
+       tm_struct.tm_mday = 32;        /* day of the month [1-31] */
+       tm_struct.tm_mon = 12;         /* months since January [0-11] */
+       tm_struct.tm_year = 0;        /* years since 1900 */
+       tm_struct.tm_wday = 7;        /* days since Sunday [0-6] */
+       tm_struct.tm_yday = 366;        /* days since January 1 [0-365] */
+       tm_struct.tm_isdst = -1;       /* Daylight Savings Time flag */]]>
+  </block>
+  <block dials="ALL_MAX">
+   <![CDATA[tm_struct.tm_sec = MAXINT; /* seconds after the minute [0-60] */   
+       tm_struct.tm_min = MAXINT;         /* minutes after the hour [0-59] */
+       tm_struct.tm_hour = MAXINT;        /* hours since midnight [0-23] */
+       tm_struct.tm_mday = MAXINT;        /* day of the month [1-31] */
+       tm_struct.tm_mon = MAXINT;         /* months since January [0-11] */
+       tm_struct.tm_year = MAXINT;        /* years since 1900 */
+       tm_struct.tm_wday = MAXINT;        /* days since Sunday [0-6] */
+       tm_struct.tm_yday = MAXINT;        /* days since January 1 [0-365] */
+       tm_struct.tm_isdst = MAXINT;       /* Daylight Savings Time flag */]]>
+  </block>
+  <block dials="ALL_MIN">
+   <![CDATA[tm_struct.tm_sec = -MAXINT; /* seconds after the minute [0-60] */   
+       tm_struct.tm_min = -MAXINT;         /* minutes after the hour [0-59] */
+       tm_struct.tm_hour = -MAXINT;        /* hours since midnight [0-23] */
+       tm_struct.tm_mday = -MAXINT;        /* day of the month [1-31] */
+       tm_struct.tm_mon = -MAXINT;         /* months since January [0-11] */
+       tm_struct.tm_year = -MAXINT;        /* years since 1900 */
+       tm_struct.tm_wday = -MAXINT;        /* days since Sunday [0-6] */
+       tm_struct.tm_yday = -MAXINT;        /* days since January 1 [0-365] */
+       tm_struct.tm_isdst = -MAXINT;       /* Daylight Savings Time flag */]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable=&tm_struct;
+  fclose(logFile);]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </cleanup>
+</dt>

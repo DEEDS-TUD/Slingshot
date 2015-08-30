@@ -1,0 +1,11 @@
+*.swp
+*.pyc
+trebuchet/.ropeproject/*
+slingshot/.ropeproject/*
+env/*
+slingshot.egg*
+trebuchet.egg*
+*.db
+tags
+dist/*
+.coverage

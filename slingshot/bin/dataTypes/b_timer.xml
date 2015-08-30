@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_timer
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  timer_t
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    ABS
+   </dial>
+   <dial>
+    LOCAL
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <time.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="ABS">
+   <![CDATA[_theVariable= TIMER_ABSTIME;]]>
+  </block>
+  <block dials="LOCAL">
+   <![CDATA[timer_t tempTimer;
+    if (timer_create (CLOCK_REALTIME, NULL, &tempTimer) == -1)
+    {
+      FILE* logFile = NULL;
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile,"b_timer LOCAL - error creating timer - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = tempTimer;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

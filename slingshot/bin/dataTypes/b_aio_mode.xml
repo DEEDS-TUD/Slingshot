@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_aio_mode
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    LIO_WAIT
+   </dial>
+   <dial>
+    LIO_NOWAIT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <aio.h>
+   #include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="LIO_WAIT">
+   <![CDATA[_theVariable= LIO_WAIT;]]>
+  </block>
+  <block dials="LIO_NOWAIT">
+   <![CDATA[_theVariable= LIO_NOWAIT;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_whence
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    SEEK_SET
+   </dial>
+   <dial>
+    SEEK_CUR
+   </dial>
+   <dial>
+    SEEK_END
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SEEK_SET">
+   <![CDATA[_theVariable= SEEK_SET;]]>
+  </block>
+  <block dials="SEEK_CUR">
+   <![CDATA[_theVariable= SEEK_CUR;]]>
+  </block>
+  <block dials="SEEK_END">
+   <![CDATA[_theVariable= SEEK_END;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_ptr_char
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  char**
+ </dt_type>
+ <dial_groups order="SIZE;CONTENTS;FILL">
+  <group name="FILL">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    SOME
+   </dial>
+   <dial>
+    FULL
+   </dial>
+  </group>
+  <group name="CONTENTS">
+   <dial>
+    NUM
+   </dial>
+   <dial>
+    NASTY
+   </dial>
+   <dial>
+    ESC
+   </dial>
+   <dial>
+    CHAR
+   </dial>
+  </group>
+  <group name="SIZE">
+   <dial>
+    S1
+   </dial>
+   <dial>
+    S4
+   </dial>
+   <dial>
+    S16
+   </dial>
+   <dial>
+    S8K
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_buf.h" //parent class include file]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static char  *temp = NULL;
+  static char *cp_temp = NULL;
+  char  fillVar1;
+  int  size1;
+#define sup_fillstring(buf,len,fillChar)   for (int i=0; i<len; i++) buf[i] = fillChar]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="S1">
+   <![CDATA[cp_temp = temp = (char *)malloc(1);]]>
+  </block>
+  <block dials="S4">
+   <![CDATA[cp_temp = temp = (char *)malloc(4);]]>
+  </block>
+  <block dials="S16">
+   <![CDATA[cp_temp = temp = (char *)malloc(16);]]>
+  </block>
+  <block dials="S8K">
+   <![CDATA[cp_temp = temp = (char *)malloc(8192);]]>
+  </block>
+  <block dials="CHAR">
+   <![CDATA[fillVar1 = 'A';]]>
+  </block>
+  <block dials="NUM">
+   <![CDATA[fillVar1 = '1';]]>
+  </block>
+  <block dials="NASTY">
+   <![CDATA[fillVar1 = char(22);]]>
+  </block>
+  <block dials="ESC">
+   <![CDATA[fillVar1 = char(27);]]>
+  </block>
+  <block dials="SOME">
+   <![CDATA[sup_fillstring(temp, (int)(size1/3), 'A');
+      temp[(int)(size1/3)+1]='\0';]]>
+  </block>
+  <block dials="FULL">
+   <![CDATA[sup_fillstring(temp, size1, fillVar1);]]>
+  </block>
+  <block dials="EMPTY">
+   <![CDATA[temp[0]='\0';]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &temp;]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[if (temp !=NULL)
+	free(cp_temp);]]>
+  </block>
+ </cleanup>
+</dt>

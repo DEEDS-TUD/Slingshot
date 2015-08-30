@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_wchar
+ </name>
+ <parent>
+  b_char
+ </parent>
+ <dt_type>
+  wchar_t
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    WCHAR_MAX
+   </dial>
+   <dial>
+    WCHAR_MIN
+   </dial>
+   <dial>
+    WCHAR_SPACE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <wchar.h>
+  #include "b_char.h"
+  #include "values.h"  //for digital unix
+  #include "bTypes.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="WCHAR_MAX">
+   <![CDATA[_theVariable=WCHAR_MAX;]]>
+  </block>
+  <block dials="WCHAR_MIN">
+   <![CDATA[_theVariable=WCHAR_MIN;]]>
+  </block>
+  <block dials="WCHAR_SPACE">
+   <![CDATA[_theVariable= ' ';]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </cleanup>
+</dt>

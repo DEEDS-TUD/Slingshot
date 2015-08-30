@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_oflag
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="ACCESS;O_APPEND;O_CREAT;O_DSYNC;O_EXCL;O_NOCTTY;O_NONBLOCK;O_RSYNC;O_SYNC;O_TRUNC">
+  <group name="O_DSYNC">
+   <dial>
+    D_SET
+   </dial>
+   <dial>
+    D_CLEAR
+   </dial>
+  </group>
+  <group name="O_SYNC">
+   <dial>
+    SYNC_SET
+   </dial>
+   <dial>
+    SYNC_CLEAR
+   </dial>
+  </group>
+  <group name="O_RSYNC">
+   <dial>
+    R_SET
+   </dial>
+   <dial>
+    R_CLEAR
+   </dial>
+  </group>
+  <group name="O_CREAT">
+   <dial>
+    C_SET
+   </dial>
+   <dial>
+    C_CLEAR
+   </dial>
+  </group>
+  <group name="O_EXCL">
+   <dial>
+    E_SET
+   </dial>
+   <dial>
+    E_CLEAR
+   </dial>
+  </group>
+  <group name="O_APPEND">
+   <dial>
+    A_SET
+   </dial>
+   <dial>
+    A_CLEAR
+   </dial>
+  </group>
+  <group name="ACCESS">
+   <dial>
+    RDONLY_SET
+   </dial>
+   <dial>
+    WRONLY_SET
+   </dial>
+   <dial>
+    RDWR_SET
+   </dial>
+   <dial>
+    NONE
+   </dial>
+  </group>
+  <group name="O_NOCTTY">
+   <dial>
+    NCT_SET
+   </dial>
+   <dial>
+    NCT_CLEAR
+   </dial>
+  </group>
+  <group name="O_NONBLOCK">
+   <dial>
+    NBLK_SET
+   </dial>
+   <dial>
+    NBLK_CLEAR
+   </dial>
+  </group>
+  <group name="O_TRUNC">
+   <dial>
+    T_SET
+   </dial>
+   <dial>
+    T_CLEAR
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <stdio.h>
+#include <fcntl.h>
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[_theVariable = 0;]]>
+  </block>
+  <block dials="RDONLY_SET">
+   <![CDATA[_theVariable |=  O_RDONLY;]]>
+  </block>
+  <block dials="WRONLY_SET">
+   <![CDATA[_theVariable |=  O_WRONLY;]]>
+  </block>
+  <block dials="RDWR_SET">
+   <![CDATA[_theVariable |=  O_RDWR;]]>
+  </block>
+  <block dials="A_SET">
+   <![CDATA[_theVariable |=  O_APPEND;]]>
+  </block>
+  <block dials="C_SET">
+   <![CDATA[_theVariable |=  O_CREAT;]]>
+  </block>
+  <block dials="D_SET">
+   <![CDATA[_theVariable |=  O_DSYNC;]]>
+  </block>
+  <block dials="E_SET">
+   <![CDATA[_theVariable |=  O_EXCL;]]>
+  </block>
+  <block dials="NCT_SET">
+   <![CDATA[_theVariable |=  O_NOCTTY;]]>
+  </block>
+  <block dials="NBLK_SET">
+   <![CDATA[_theVariable |=  O_NONBLOCK;]]>
+  </block>
+  <block dials="R_SET">
+   <![CDATA[_theVariable |=  O_RSYNC;]]>
+  </block>
+  <block dials="SYNC_SET">
+   <![CDATA[_theVariable |=  O_SYNC;]]>
+  </block>
+  <block dials="T_SET">
+   <![CDATA[_theVariable |=  O_TRUNC;]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </cleanup>
+</dt>

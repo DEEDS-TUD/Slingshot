@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <fstream>
+#include <iostream>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+//#include <sys/errno.h>
+#include <errno.h>
+#include <unistd.h>
+
+#include <FUNC_HEADER>
+#include <signal.h>
+#include <iostream>
+
+#include "HEADER_NAME.h"
+
+// signal handle function
+void setup_catch_signal (int signal_number)
+{
+    FILE* logFile = NULL;
+    if ((logFile = fopen("/tmp/horoTest.txt", "a+")) == NULL)
+    {
+        std::cout << "CAUGHT SETUP SIGNAL" << std::endl;
+    }
+    fprintf(logFile, "caught setup HANDLE signal\n");
+    fclose(logFile);
+    exit(99);
+}
+
+int exec_tc()
+{
+    void **ref[MAXP];
+    RETURN_VAL
+    errno=0;
+
+    struct sigaction setup_action;
+    sigemptyset(&setup_action.sa_mask);
+    setup_action.sa_handler = setup_catch_signal;
+    (void) sigaction (SIGINT, &setup_action, NULL);
+    (void) sigaction (SIGQUIT, &setup_action, NULL);
+    (void) sigaction (SIGTERM, &setup_action, NULL);
+    (void) sigaction (SIGABRT, &setup_action, NULL);
+    (void) sigaction (SIGBUS, &setup_action, NULL);
+    (void) sigaction (SIGSEGV, &setup_action, NULL);
+
+    S_CALLS
+    COMMIT_CALLS
+
+    sigemptyset(&setup_action.sa_mask);
+    setup_action.sa_handler = SIG_DFL;
+    (void) sigaction (SIGINT, &setup_action, NULL);
+    (void) sigaction (SIGQUIT, &setup_action, NULL);
+    (void) sigaction (SIGTERM, &setup_action, NULL);
+    (void) sigaction (SIGABRT, &setup_action, NULL);
+    (void) sigaction (SIGBUS, &setup_action, NULL);
+    (void) sigaction (SIGSEGV, &setup_action, NULL);
+
+    VALUE_RETURN FUN_NAME(TEMP);
+    CLEANUP_CALLS
+    OUTPUT
+    return (errno);
+}

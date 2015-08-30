@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_category
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    LC_ALL
+   </dial>
+   <dial>
+    LC_NUMERIC
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <locale.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="LC_ALL">
+   <![CDATA[_theVariable= LC_ALL;]]>
+  </block>
+  <block dials="LC_NUMERIC">
+   <![CDATA[_theVariable= LC_NUMERIC;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

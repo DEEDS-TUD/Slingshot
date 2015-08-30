@@ -1,0 +1,73 @@
+b_aio_mode int
+b_char char
+b_clockid clockid_t
+b_double double
+b_fd int
+b_float float
+b_fname char*
+b_id uid_t
+b_int_amode int
+b_int_buffer_mode int
+b_int_category int
+b_int_file_var int
+b_int int
+b_int_sys_var int
+b_int_tc int
+b_int_whence int
+b_jmp_buf jmp_buf
+b_long long
+b_map_flag int
+b_mcl_flag int
+b_mode_t mode_t
+b_mq_attr mq_attr*
+b_mqd mqd_t
+b_ms_flag int
+b_oflag int
+b_pid pid_t
+b_prot_flag int
+b_ptr_aiocb struct aiocb*
+b_ptr_buf void*
+b_ptr_char char*
+b_ptr_char_id char*
+b_ptr_char_mode char*
+b_ptr_dir DIR*
+b_ptr_double double*
+b_ptr_file FILE*
+b_ptr_float float*
+b_ptr_fpos_t fpos_t*
+b_ptr_gid_t gid_t*
+b_ptr_int int*
+b_ptr_itimerspec struct itimerspec*
+b_ptr_long long*
+b_ptr_ptr_aiocb struct aiocb**
+b_ptr_ptr_char char**
+b_ptr_sched_param struct sched_param*
+b_ptr_sem_t sem_t*
+b_ptr_sigaction struct sigaction*
+b_ptr_sigevent struct sigevent*
+b_ptr_siginfo_t siginfo_t*
+b_ptr_sigset_t sigset_t*
+b_ptr_stat struct stat*
+b_ptr_termios struct termios*
+b_ptr_timespec timespec*
+b_ptr_time_t time_t*
+b_ptr_tms struct tms*
+b_ptr_tm struct tm*
+b_ptr_unsigned_int unsigned int*
+b_ptr_utimbuf struct utimbuf *
+b_ptr_utsname struct utsname *
+b_ptr_void void*
+b_ptr_wchar wchar_t*
+b_sched_policy int
+b_short_int_common unsigned short
+b_short short
+b_sig_how int
+b_signal int
+b_size int
+b_timer timer_t
+b_time_t time_t
+b_unsigned_int unsigned int
+b_unsigned_long unsigned long
+b_unsigned_short unsigned short
+b_waitopt int
+b_wchar wchar_t

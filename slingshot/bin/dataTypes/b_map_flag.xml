@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_map_flag
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="MAP_FLAG">
+  <group name="MAP_FLAG">
+   <dial>
+    SHARED
+   </dial>
+   <dial>
+    PRIVATE
+   </dial>
+   <dial>
+    FIXED
+   </dial>
+   <dial>
+    ALL
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sys/mman.h>
+#include <unistd.h>
+#include "bTypes.h"
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[_theVariable = 0;]]>
+  </block>
+  <block dials="SHARED,ALL">
+   <![CDATA[_theVariable |= MAP_SHARED;]]>
+  </block>
+  <block dials="PRIVATE,ALL">
+   <![CDATA[_theVariable |= MAP_PRIVATE;]]>
+  </block>
+  <block dials="FIXED,ALL">
+   <![CDATA[_theVariable |= MAP_FIXED;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

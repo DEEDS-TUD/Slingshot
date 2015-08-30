@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="callTable">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="function" type="function" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="function">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="header" type="xs:string" />
+            <xs:element name="return" type="xs:string" />
+            <xs:element name="param" type="xs:string" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

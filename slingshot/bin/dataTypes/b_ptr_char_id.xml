@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_char_id
+ </name>
+ <parent>
+  b_ptr_char
+ </parent>
+ <dt_type>
+  char*
+ </dt_type>
+ <dial_groups order="NAME">
+  <group name="NAME">
+   <dial>
+    SYSTEM
+   </dial>
+   <dial>
+    ROOT
+   </dial>
+   <dial>
+    GROUP
+   </dial>
+   <dial>
+    USER
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_char.h" //parent class include file
+  #include <sys/types.h>
+  #include <pwd.h>
+  #include <grp.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static char  charArray[64];]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SYSTEM">
+   <![CDATA[strcpy (charArray,"SYSTEM");]]>
+  </block>
+  <block dials="ROOT">
+   <![CDATA[strcpy (charArray,"ROOT");]]>
+  </block>
+  <block dials="GROUP">
+   <![CDATA[struct group* tempGroup;
+     tempGroup = getgrgid(getgid());
+     strncpy(charArray,tempGroup->gr_name, 63);]]>
+  </block>
+  <block dials="USER">
+   <![CDATA[struct passwd* tempPasswd;
+    tempPasswd = getpwuid(getuid());
+    strncpy(charArray, tempPasswd->pw_name,63);]]>
+  </block>
+  <block>
+   <![CDATA[charArray[63] = '\0';
+  _theVariable = charArray;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

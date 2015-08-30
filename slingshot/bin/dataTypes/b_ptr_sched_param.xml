@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_sched_param
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structschedparamptr
+ </dt_type>
+ <dial_groups order="PRIORITY">
+  <group name="PRIORITY">
+   <dial>
+    CURRENT
+   </dial>
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    NEG_ONE
+   </dial>
+   <dial>
+    MIN
+   </dial>
+   <dial>
+    MAX
+   </dial>
+   <dial>
+    ONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#define structschedparamptr struct sched_param*
+#include <sys/types.h>
+#include <sched.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct sched_param sched_param_temp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="CURRENT">
+   <![CDATA[if ((sched_getparam(getpid(), &sched_param_temp)) == -1)
+    {
+      FILE* logFile = NULL;
+      
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf(logFile, "b_ptr_sched_param CURRENT - error getting sched_param  - function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[sched_param_temp.sched_priority = 0;]]>
+  </block>
+  <block dials="NEG_ONE">
+   <![CDATA[sched_param_temp.sched_priority = -1;]]>
+  </block>
+  <block dials="MIN">
+   <![CDATA[sched_param_temp.sched_priority = -MAXINT;]]>
+  </block>
+  <block dials="MAX">
+   <![CDATA[sched_param_temp.sched_priority = MAXINT;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[sched_param_temp.sched_priority = 1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable=&sched_param_temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

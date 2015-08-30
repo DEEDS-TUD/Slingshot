@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_double
+ </name>
+ <parent>
+  b_float
+ </parent>
+ <dt_type>
+  double
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    DMAXEXP
+   </dial>
+   <dial>
+    DMINEXP
+   </dial>
+   <dial>
+    MAXDOUBLE
+   </dial>
+   <dial>
+    MINDOUBLE
+   </dial>
+   <dial>
+    NEGMAXDOUBLE
+   </dial>
+   <dial>
+    NEGMINDOUBLE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_float.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="DMAXEXP">
+   <![CDATA[_theVariable = DMAXEXP;]]>
+  </block>
+  <block dials="DMINEXP">
+   <![CDATA[_theVariable = DMINEXP;]]>
+  </block>
+  <block dials="MAXDOUBLE">
+   <![CDATA[_theVariable = MAXDOUBLE;]]>
+  </block>
+  <block dials="MINDOUBLE">
+   <![CDATA[_theVariable = MINDOUBLE;]]>
+  </block>
+  <block dials="NEGMAXDOUBLE">
+   <![CDATA[_theVariable = -MAXDOUBLE;]]>
+  </block>
+  <block dials="NEGMINDOUBLE">
+   <![CDATA[_theVariable = -MINDOUBLE;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_sigset_t
+ </name>
+ <parent>
+  b_ptr_long
+ </parent>
+ <dt_type>
+  sigset_t*
+ </dt_type>
+ <dial_groups order="SIGPTR">
+  <group name="SIGPTR">
+   <dial>
+    SIGSET_EMPTY
+   </dial>
+   <dial>
+    SIGSET_FULL
+   </dial>
+   <dial>
+    SIGSET_SIGINT
+   </dial>
+   <dial>
+    SIGSET_SIGSEGV
+   </dial>
+   <dial>
+    SIGSET_GARBAGE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <signal.h>
+#include "b_ptr_long.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static sigset_t sigset_tmp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SIGSET_EMPTY">
+   <![CDATA[if((sigemptyset (&sigset_tmp))!=0)
+      {
+	  	perror ("sigemptyset at SIGSET_EMPTY failed. Function not tested");
+		exit(99);
+      }
+      _theVariable = &sigset_tmp;]]>
+  </block>
+  <block dials="SIGSET_FULL">
+   <![CDATA[if((sigfillset (&sigset_tmp))!=0){
+		perror ("sigemptyset at SIGSET_FULL failed. Function not tested");
+		exit(99);
+	}
+      _theVariable = &sigset_tmp;]]>
+  </block>
+  <block dials="SIGSET_SIGINT">
+   <![CDATA[if((sigemptyset (&sigset_tmp))!=0){
+		perror ("sigemptyset at SIGSET_SIGINT failed. Function not tested");
+		exit(99);
+	}
+      if((sigaddset (&sigset_tmp, SIGINT))!=0){
+		perror ("sigaddset at SIGSET_SIGINT failed. Function not tested");
+		exit(99);
+	}
+       _theVariable = &sigset_tmp;]]>
+  </block>
+  <block dials="SIGSET_SIGSEGV">
+   <![CDATA[if((sigemptyset (&sigset_tmp))!=0){
+		perror ("sigfillset at SIGSET_SIGSEGV failed. Function not tested");
+		exit(99);
+	}
+      if((sigaddset (&sigset_tmp, SIGSEGV))!=0){
+		perror ("sigaddset at SIGSET_SIGSEGV failed. Function not tested");
+		exit(99);
+	}
+      _theVariable = &sigset_tmp;]]>
+  </block>
+  <block dials="SIGSET_GARBAGE">
+   <![CDATA[char *buf = (char *)&sigset_tmp;
+	for ( int i=0 ; i< sizeof (sigset_t); i++ ) *buf++ = 'a';
+      _theVariable = &sigset_tmp;]]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[#ifdef DEBUG
+        printf("VALUE:%x %x in commit\n",_theVariable, *_theVariable);
+#endif]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[#ifdef DEBUG
+        printf("VALUE:%x %x in cleanup\n",_theVariable, *_theVariable);
+#endif]]>
+  </block>
+ </cleanup>
+</dt>

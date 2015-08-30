@@ -1,0 +1,9 @@
+mkdir b_fname b_mode_t; b_fname r_user; b_mode_t u_read
+mkdir b_fname b_mode_t; b_fname r_user; b_mode_t u_write
+mkdir b_fname b_mode_t; b_fname r_user; b_mode_t u_exec
+mkdir b_fname b_mode_t; b_fname r_user; b_mode_t u_rwx
+mkdir b_fname b_mode_t; b_fname r_user; b_mode_t g_read
+access b_fname b_int_amode; b_fname r_user; b_int_amode f_ok
+access b_fname b_int_amode; b_fname r_user; b_int_amode r_ok
+access b_fname b_int_amode; b_fname r_user; b_int_amode rwx_ok
+access b_fname b_int_amode; b_fname r_user; b_int maxint

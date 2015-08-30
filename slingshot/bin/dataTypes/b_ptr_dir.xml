@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_dir
+ </name>
+ <parent>
+  b_ptr_char
+ </parent>
+ <dt_type>
+  DIR*
+ </dt_type>
+ <dial_groups order="STATE;CONTENT">
+  <group name="CONTENT">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    WITH_FILES
+   </dial>
+  </group>
+  <group name="STATE">
+   <dial>
+    DIR_CLOSED
+   </dial>
+   <dial>
+    DIR_OPEN
+   </dial>
+   <dial>
+    DIR_REMOVED
+   </dial>
+   <dial>
+    DIR_MIDWAY
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <stdlib.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <errno.h>
+#include "bTypes.h"
+#include "b_ptr_char.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define TESTDIR2	"testdir2"
+
+static DIR* dirPtr;
+static DIR* copy_dirPtr;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[int withFileFlag = 0;
+  dirPtr = NULL;
+  copy_dirPtr = NULL;
+
+  // cleanup from any prior runs
+  system("rm -rf testdir2");
+
+   // Setup log file for template information
+   FILE* logFile = NULL;
+   if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+   {
+      exit(99);
+   }
+
+  if (mkdir(TESTDIR2,S_IRWXU|S_IRWXG|S_IRWXO)!=0)	/* create test directory, u+rwx */
+  {
+    //if the directory already exists ignore the error
+    if (errno != EEXIST) 
+    {
+      fprintf (logFile, "b_ptr_dir error creating directory testdir2 - values not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+  }]]>
+  </block>
+  <block dials="WITH_FILES">
+   <![CDATA[char fname[16];
+    int i;
+    FILE* filePtr = NULL;
+    for (i=0; i < 5; i++)
+    {
+      strcpy(fname,"testfile");
+      sprintf (&fname[8], "%d", i);
+      if ((filePtr = fopen(fname, "w+")) == NULL)
+      {
+        fprintf(logFile,"b_ptr_dir WITH_FILES -error creating file - value not tested\n");
+        fclose(logFile);
+        exit(99);
+      }
+
+      fprintf(filePtr, "This is a testfile!\n");
+      fclose(filePtr);
+    }
+    withFileFlag = 1;]]>
+  </block>
+  <block>
+   <![CDATA[if ((dirPtr = opendir(TESTDIR2)) == NULL)
+  {
+    fprintf (logFile,"b_ptr_dir - error opening directory - value not tested\n");
+    fclose(logFile);
+    exit(99);
+  }]]>
+  </block>
+  <block dials="DIR_CLOSED">
+   <![CDATA[if (closedir (dirPtr) == -1) 
+    {
+      fprintf (logFile, "b_ptr_dir.tpl CLOSED - unable to close directory - value not tested \n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = dirPtr;
+    copy_dirPtr = dirPtr;]]>
+  </block>
+  <block dials="DIR_OPEN">
+   <![CDATA[_theVariable = dirPtr;     
+    copy_dirPtr = dirPtr;]]>
+  </block>
+  <block dials="DIR_MIDWAY">
+   <![CDATA[struct dirent* temp_dirent = NULL;
+
+    if (withFileFlag)
+    {
+      if ((temp_dirent = readdir(dirPtr))==NULL)
+      {
+        fprintf(logFile,"b_ptr_dir.tpl DIR_MIDWAY  - error reading through files in directory - value not tested\n");
+        fclose(logFile);
+        exit(99);
+      }
+    }
+    _theVariable = dirPtr;
+    copy_dirPtr = dirPtr;]]>
+  </block>
+  <block dials="DIR_REMOVED">
+   <![CDATA[if (rmdir(TESTDIR2) != 0) 
+    {
+      fprintf(logFile, "b_ptr_dir DIR_REMOVED - error encountered removing directory - value not tested\n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = dirPtr;
+    copy_dirPtr = dirPtr;]]>
+  </block>
+  <block>
+   <![CDATA[fclose(logFile);]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup>
+  <block dials="DIR_OPEN, DIR_MIDWAY">
+   <![CDATA[closedir(copy_dirPtr);]]>
+  </block>
+  <block>
+   <![CDATA[system("rm -rf testdir2");]]>
+  </block>
+ </cleanup>
+</dt>

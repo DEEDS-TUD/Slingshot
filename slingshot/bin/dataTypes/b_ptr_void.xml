@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_void
+ </name>
+ <parent>
+  paramAccess
+ </parent>
+ <dt_type>
+  void*
+ </dt_type>
+ <dial_groups order="POSITION">
+  <group name="POSITION">
+   <dial>
+    NULL
+   </dial>
+   <dial>
+    NEGONE
+   </dial>
+   <dial>
+    MAXINT
+   </dial>
+   <dial>
+    STATIC
+   </dial>
+   <dial>
+    DYNAMIC
+   </dial>
+   <dial>
+    CONST
+   </dial>
+   <dial>
+    FREED
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "values.h"
+  #include "bTypes.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define MaxBytes sizeof(void *);
+  static void *ptrRef = NULL;
+  static void *cp_ptrRef = NULL;
+  //void *saveloc;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[char stat[56];]]>
+  </block>
+  <block dials="NULL">
+   <![CDATA[_theVariable=(void *) NULL;]]>
+  </block>
+  <block dials="NEGONE">
+   <![CDATA[_theVariable=(void *) -1;]]>
+  </block>
+  <block dials="MAXINT">
+   <![CDATA[_theVariable=(void *)MAXINT;]]>
+  </block>
+  <block dials="STATIC">
+   <![CDATA[_theVariable=(void*)&stat;]]>
+  </block>
+  <block dials="DYNAMIC">
+   <![CDATA[cp_ptrRef = ptrRef = malloc(16);
+       _theVariable = (void *) ptrRef;]]>
+  </block>
+  <block dials="CONST">
+   <![CDATA[ptrRef =  (void*)"                                             ";
+       _theVariable = ptrRef;]]>
+  </block>
+  <block dials="FREED">
+   <![CDATA[cp_ptrRef = ptrRef = malloc (10240); //allocate 10k block
+       _theVariable = (void *) ptrRef;]]>
+  </block>
+ </access>
+ <commit>
+  <block dials="FREED">
+   <![CDATA[free(ptrRef);]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block dials="DYNAMIC">
+   <![CDATA[if (cp_ptrRef)
+     {
+        free(cp_ptrRef);
+        ptrRef = NULL;
+     }]]>
+  </block>
+ </cleanup>
+</dt>

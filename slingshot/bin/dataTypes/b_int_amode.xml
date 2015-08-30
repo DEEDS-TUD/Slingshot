@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_amode
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="AMODE">
+  <group name="AMODE">
+   <dial>
+    R_OK
+   </dial>
+   <dial>
+    F_OK
+   </dial>
+   <dial>
+    RWX_OK
+   </dial>
+   <dial>
+    FRWX_OK
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sys/types.h>
+#include <unistd.h>
+#include "bTypes.h"
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[_theVariable = 0;]]>
+  </block>
+  <block dials="F_OK, FRWX_OK">
+   <![CDATA[_theVariable |= F_OK;]]>
+  </block>
+  <block dials="R_OK">
+   <![CDATA[_theVariable |= R_OK;]]>
+  </block>
+  <block dials="RWX_OK">
+   <![CDATA[_theVariable |= R_OK | W_OK | X_OK;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

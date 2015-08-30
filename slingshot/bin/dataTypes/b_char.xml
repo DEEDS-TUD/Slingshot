@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_char
+ </name>
+ <parent>
+  paramAccess
+ </parent>
+ <dt_type>
+  char
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    NUL
+   </dial>
+   <dial>
+    SOH
+   </dial>
+   <dial>
+    TAB
+   </dial>
+   <dial>
+    LF
+   </dial>
+   <dial>
+    CR
+   </dial>
+   <dial>
+    DLE
+   </dial>
+   <dial>
+    ESC
+   </dial>
+   <dial>
+    SPACE
+   </dial>
+   <dial>
+    COMMA
+   </dial>
+   <dial>
+    NUM0
+   </dial>
+   <dial>
+    NUM9
+   </dial>
+   <dial>
+    AT
+   </dial>
+   <dial>
+    BIGA
+   </dial>
+   <dial>
+    BIGZ
+   </dial>
+   <dial>
+    LEFTSQBRKT
+   </dial>
+   <dial>
+    APST
+   </dial>
+   <dial>
+    SMLA
+   </dial>
+   <dial>
+    SMLZ
+   </dial>
+   <dial>
+    LEFTCUVBRKT
+   </dial>
+   <dial>
+    FF
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "values.h"  //for digital unix
+  #include "bTypes.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define MaxBytes sizeof(unsigned short);]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="NUL">
+   <![CDATA[_theVariable=0;]]>
+  </block>
+  <block dials="SOH">
+   <![CDATA[_theVariable=1;//smilly face]]>
+  </block>
+  <block dials="TAB">
+   <![CDATA[_theVariable=9;]]>
+  </block>
+  <block dials="LF">
+   <![CDATA[_theVariable=10;//line feed]]>
+  </block>
+  <block dials="CR">
+   <![CDATA[_theVariable=13;//carriage return]]>
+  </block>
+  <block dials="DLE">
+   <![CDATA[_theVariable=16;//delete]]>
+  </block>
+  <block dials="ESC">
+   <![CDATA[_theVariable=27;]]>
+  </block>
+  <block dials="SPACE">
+   <![CDATA[_theVariable=32;]]>
+  </block>
+  <block dials="COMMA">
+   <![CDATA[_theVariable=44;]]>
+  </block>
+  <block dials="NUM0">
+   <![CDATA[_theVariable=48; //'0']]>
+  </block>
+  <block dials="NUM9">
+   <![CDATA[_theVariable=57;//'9']]>
+  </block>
+  <block dials="AT">
+   <![CDATA[_theVariable=64; //'@']]>
+  </block>
+  <block dials="BIGA">
+   <![CDATA[_theVariable=65;//'A']]>
+  </block>
+  <block dials="BIGZ">
+   <![CDATA[_theVariable=90;//'Z']]>
+  </block>
+  <block dials="LEFTSQBRKT">
+   <![CDATA[_theVariable=91;//'[']]>
+  </block>
+  <block dials="APST">
+   <![CDATA[_theVariable=96;//'`']]>
+  </block>
+  <block dials="SMLA">
+   <![CDATA[_theVariable=97;//'a']]>
+  </block>
+  <block dials="SMLZ">
+   <![CDATA[_theVariable=122;//'z']]>
+  </block>
+  <block dials="LEFTCUVBRKT">
+   <![CDATA[_theVariable=123;//'{']]>
+  </block>
+  <block dials="FF">
+   <![CDATA[_theVariable=255;//blank 'FF']]>
+  </block>
+ </access>
+ <commit>
+  <block>
+   <![CDATA[#ifdef DEBUG
+	printf("VALUE:%c in commit\n", _theVariable);
+#endif]]>
+  </block>
+ </commit>
+ <cleanup>
+  <block>
+   <![CDATA[#ifdef DEBUG
+	printf("VALUE:%c in cleanup\n", _theVariable);
+#endif]]>
+  </block>
+ </cleanup>
+</dt>

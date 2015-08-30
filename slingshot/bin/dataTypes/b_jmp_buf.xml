@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_jmp_buf
+ </name>
+ <parent>
+  b_ptr_int
+ </parent>
+ <dt_type>
+  jmp_buf
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    VALID
+   </dial>
+   <dial>
+    SIG_VALID_SAVE
+   </dial>
+   <dial>
+    SIG_VALID_NOSAVE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_int.h"
+#include <setjmp.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="VALID">
+   <![CDATA[setjmp(_theVariable);]]>
+  </block>
+  <block dials="SIG_VALID_SAVE">
+   <![CDATA[sigsetjmp(_theVariable,1);]]>
+  </block>
+  <block dials="SIG_VALID_NOSAVE">
+   <![CDATA[sigsetjmp(_theVariable,0);]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

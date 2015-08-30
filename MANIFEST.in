@@ -1,0 +1,6 @@
+include slingshot/bin/*
+include slingshot/bin/dataTypes/*
+include slingshot/db/*.sql
+include tests/validation-tests/*.feature
+include tests/fixtures/*
+

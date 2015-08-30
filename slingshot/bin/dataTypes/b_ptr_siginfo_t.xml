@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_siginfo_t
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  siginfo_t*
+ </dt_type>
+ <dial_groups order="SI_SIGNO;SI_CODE">
+  <group name="SI_SIGNO">
+   <dial>
+    SIGABRT
+   </dial>
+   <dial>
+    SIGILL
+   </dial>
+   <dial>
+    SIGUSR1
+   </dial>
+   <dial>
+    SIGUSR2
+   </dial>
+   <dial>
+    MAXINT
+   </dial>
+   <dial>
+    MININT
+   </dial>
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    ONE
+   </dial>
+   <dial>
+    NEG_ONE
+   </dial>
+  </group>
+  <group name="SI_CODE">
+   <dial>
+    SI_USER
+   </dial>
+   <dial>
+    SI_QUEUE
+   </dial>
+   <dial>
+    SI_TIMER
+   </dial>
+   <dial>
+    SI_ASYNCIO
+   </dial>
+   <dial>
+    SI_MESGQ
+   </dial>
+   <dial>
+    C_MAXINT
+   </dial>
+   <dial>
+    C_MININT
+   </dial>
+   <dial>
+    C_ZERO
+   </dial>
+   <dial>
+    C_ONE
+   </dial>
+   <dial>
+    C_NEG_ONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <signal.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static siginfo_t siginfo_t_temp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SIGABRT">
+   <![CDATA[siginfo_t_temp.si_signo = SIGABRT ;]]>
+  </block>
+  <block dials="SIGILL">
+   <![CDATA[siginfo_t_temp.si_signo = SIGILL;]]>
+  </block>
+  <block dials="SIGUSR1">
+   <![CDATA[siginfo_t_temp.si_signo = SIGUSR1;]]>
+  </block>
+  <block dials="SIGUSR2">
+   <![CDATA[siginfo_t_temp.si_signo = SIGUSR2;]]>
+  </block>
+  <block dials="MAXINT">
+   <![CDATA[siginfo_t_temp.si_signo = MAXINT;]]>
+  </block>
+  <block dials="MININT">
+   <![CDATA[siginfo_t_temp.si_signo = -MAXINT;]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[siginfo_t_temp.si_signo = 0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[siginfo_t_temp.si_signo = 1;]]>
+  </block>
+  <block dials="NEG_ONE">
+   <![CDATA[siginfo_t_temp.si_signo = -1;]]>
+  </block>
+  <block dials="SI_USER">
+   <![CDATA[siginfo_t_temp.si_code = SI_USER;]]>
+  </block>
+  <block dials="SI_QUEUE">
+   <![CDATA[siginfo_t_temp.si_code = SI_QUEUE;]]>
+  </block>
+  <block dials="SI_TIMER">
+   <![CDATA[siginfo_t_temp.si_code = SI_TIMER;]]>
+  </block>
+  <block dials="SI_ASYNCIO">
+   <![CDATA[siginfo_t_temp.si_code = SI_ASYNCIO;]]>
+  </block>
+  <block dials="SI_MESGQ">
+   <![CDATA[siginfo_t_temp.si_code = SI_MESGQ;]]>
+  </block>
+  <block dials="C_MAXINT">
+   <![CDATA[siginfo_t_temp.si_code = MAXINT;]]>
+  </block>
+  <block dials="C_MININT">
+   <![CDATA[siginfo_t_temp.si_code = -MAXINT;]]>
+  </block>
+  <block dials="C_ZERO">
+   <![CDATA[siginfo_t_temp.si_code = 0;]]>
+  </block>
+  <block dials="C_ONE">
+   <![CDATA[siginfo_t_temp.si_code = 1;]]>
+  </block>
+  <block dials="C_NEG_ONE">
+   <![CDATA[siginfo_t_temp.si_code = -1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &siginfo_t_temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

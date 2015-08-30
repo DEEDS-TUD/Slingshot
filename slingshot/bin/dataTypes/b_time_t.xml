@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_time_t
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  time_t
+ </dt_type>
+ <dial_groups order="SECONDS">
+  <group name="SECONDS">
+   <dial>
+    NOW
+   </dial>
+   <dial>
+    TOMORROW
+   </dial>
+   <dial>
+    NEXTWEEK
+   </dial>
+   <dial>
+    NEXTMONTH
+   </dial>
+   <dial>
+    NEXTYEAR
+   </dial>
+   <dial>
+    NEXTDECADE
+   </dial>
+   <dial>
+    NEXTCENTURY
+   </dial>
+   <dial>
+    NEXTMILLENIUM
+   </dial>
+   <dial>
+    Y2K
+   </dial>
+   <dial>
+    Y2K_MINUS_ONE
+   </dial>
+   <dial>
+    Y2K_PLUS_ONE
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <time.h>
+#include "bTypes.h"
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[//need exact value for midnight_2000
+#define MIDNIGHT_2000 (2000-1970)*365*24*60*60   
+#define YEAR 365*24*60*60
+#define DAY 24*60*60
+#define HOUR 60*60
+#define MINUTE 60]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[time_t time_since_epoch = time(NULL);]]>
+  </block>
+  <block dials="NOW">
+   <![CDATA[_theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="TOMORROW">
+   <![CDATA[time_since_epoch += DAY;
+    _theVariable = time_since_epoch;]]>
+  </block>
+  <block dials="NEXTWEEK">
+   <![CDATA[time_since_epoch += (DAY*7);
+    _theVariable = time_since_epoch;]]>
+  </block>
+  <block dials="NEXTMONTH">
+   <![CDATA[time_since_epoch += (DAY*30);
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="NEXTYEAR">
+   <![CDATA[time_since_epoch += YEAR;
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="NEXTDECADE">
+   <![CDATA[time_since_epoch += (YEAR*10);
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="NEXTCENTURY">
+   <![CDATA[time_since_epoch += (YEAR*100);
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="NEXTMILLENIUM">
+   <![CDATA[time_since_epoch += (YEAR*1000);
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="Y2K">
+   <![CDATA[time_since_epoch = MIDNIGHT_2000;
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="Y2K_MINUS_ONE">
+   <![CDATA[time_since_epoch = MIDNIGHT_2000-1;
+    _theVariable= time_since_epoch;]]>
+  </block>
+  <block dials="Y2K_PLUS_ONE">
+   <![CDATA[time_since_epoch = MIDNIGHT_2000+1;
+    _theVariable= time_since_epoch;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

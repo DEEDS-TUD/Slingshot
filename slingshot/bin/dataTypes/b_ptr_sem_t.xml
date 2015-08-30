@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_sem_t
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structsemtptr
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    OPEN
+   </dial>
+   <dial>
+    CLOSED
+   </dial>
+   <dial>
+    INIT
+   </dial>
+   <dial>
+    DESTROYED
+   </dial>
+   <dial>
+    UNLINKED
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <semaphore.h>
+#define structsemtptr sem_t*
+#include <fcntl.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[#define SEMAPHORE_NAME "/tmp/ballista_semaphore"
+  static sem_t sem;
+  static sem_t* temp_sem;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[system("chmod 777 /tmp/ballista_semaphore");
+  system("rm /tmp/ballista_semaphore");]]>
+  </block>
+  <block dials="OPEN, CLOSED, UNLINKED">
+   <![CDATA[temp_sem = sem_open(SEMAPHORE_NAME, O_CREAT);
+    sem = *temp_sem;
+    _theVariable = temp_sem;]]>
+  </block>
+  <block dials="UNLINKED">
+   <![CDATA[if ((sem_unlink(SEMAPHORE_NAME)) == -1)
+    {
+      FILE* logFile = NULL;
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sem_t CLOSED error closing semaphore - function not tested \n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = temp_sem;]]>
+  </block>
+  <block dials="CLOSED">
+   <![CDATA[if ((sem_close(temp_sem)) == -1)
+    {
+      FILE* logFile = NULL;
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sem_t CLOSED error closing semaphore - function not tested \n");
+      fclose(logFile);
+      exit(99);
+    }
+    _theVariable = temp_sem;]]>
+  </block>
+  <block dials="INIT, DESTROYED">
+   <![CDATA[temp_sem = &sem;
+    if ((sem_init(temp_sem, 1, 1)) == -1)
+    {
+      FILE* logFile = NULL;
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sem_t INIT/DESTROYED error initializing semaphore - function not tested \n");
+      fclose(logFile);
+      exit(99);   
+    }
+    _theVariable = temp_sem;]]>
+  </block>
+  <block dials="DESTROYED">
+   <![CDATA[if ((sem_destroy(temp_sem)) == -1)
+    {
+      FILE* logFile = NULL;
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sem_t DESTOYED error destroying semaphore - function not tested \n");
+      fclose(logFile);
+      exit(99);   
+    }
+    _theVariable = temp_sem;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup>
+  <block dials="INIT">
+   <![CDATA[sem_destroy(temp_sem);]]>
+  </block>
+  <block dials="OPEN">
+   <![CDATA[sem_unlink(SEMAPHORE_NAME);]]>
+  </block>
+  <block dials="OPEN,UNLINKED">
+   <![CDATA[sem_close(temp_sem);]]>
+  </block>
+  <block>
+   <![CDATA[system("chmod 777 /tmp/ballista_semaphore");
+  system("rm /tmp/ballista_semaphore");]]>
+  </block>
+ </cleanup>
+</dt>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_unsigned_int
+ </name>
+ <parent>
+  b_ptr_int
+ </parent>
+ <dt_type>
+  uintPtr
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    MAXUINT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[//for mq_send and mq_receive
+#include "b_ptr_int.h"
+#include <limits.h>
+#define uintPtr unsigned int*]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static unsigned int temp;]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXUINT">
+   <![CDATA[temp = UINT_MAX;
+    _theVariable=&temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

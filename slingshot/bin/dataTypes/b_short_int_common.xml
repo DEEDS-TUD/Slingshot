@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_short_int_common
+ </name>
+ <parent>
+  paramAccess
+ </parent>
+ <dt_type>
+  intBase
+ </dt_type>
+ <dial_groups order="VALUE">
+  <group name="VALUE">
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    ONE
+   </dial>
+   <dial>
+    TWO
+   </dial>
+   <dial>
+    FIFTEEN
+   </dial>
+   <dial>
+    SIXTEEN
+   </dial>
+   <dial>
+    SEVENTEEN
+   </dial>
+   <dial>
+    SC_PAGE
+   </dial>
+   <dial>
+    SIXTYFOUR
+   </dial>
+   <dial>
+    SIXTYFIVE
+   </dial>
+   <dial>
+    ONE27
+   </dial>
+   <dial>
+    ONE29
+   </dial>
+   <dial>
+    TWO55
+   </dial>
+   <dial>
+    TWO56
+   </dial>
+   <dial>
+    TWO57
+   </dial>
+   <dial>
+    I4K
+   </dial>
+   <dial>
+    I8K
+   </dial>
+   <dial>
+    I8193
+   </dial>
+   <dial>
+    I16383
+   </dial>
+   <dial>
+    MAXSHORT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "values.h"  //for digital unix
+  #include "bTypes.h"
+  #define intBase unsigned short]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="ZERO">
+   <![CDATA[_theVariable=0;]]>
+  </block>
+  <block dials="ONE">
+   <![CDATA[_theVariable=1;]]>
+  </block>
+  <block dials="TWO">
+   <![CDATA[_theVariable=2;]]>
+  </block>
+  <block dials="FIFTEEN">
+   <![CDATA[_theVariable=15;]]>
+  </block>
+  <block dials="SIXTEEN">
+   <![CDATA[_theVariable=16;]]>
+  </block>
+  <block dials="SEVENTEEN">
+   <![CDATA[_theVariable=17;]]>
+  </block>
+  <block dials="SC_PAGE">
+   <![CDATA[_theVariable=_SC_PAGESIZE;]]>
+  </block>
+  <block dials="SIXTYFOUR">
+   <![CDATA[_theVariable=64;]]>
+  </block>
+  <block dials="SIXTYFIVE">
+   <![CDATA[_theVariable=65;]]>
+  </block>
+  <block dials="ONE27">
+   <![CDATA[_theVariable=127;]]>
+  </block>
+  <block dials="ONE29">
+   <![CDATA[_theVariable=129;]]>
+  </block>
+  <block dials="TWO55">
+   <![CDATA[_theVariable=255;]]>
+  </block>
+  <block dials="TWO56">
+   <![CDATA[_theVariable=256;]]>
+  </block>
+  <block dials="TWO57">
+   <![CDATA[_theVariable=257;]]>
+  </block>
+  <block dials="I4K">
+   <![CDATA[_theVariable=4096;]]>
+  </block>
+  <block dials="I8K">
+   <![CDATA[_theVariable=8192;]]>
+  </block>
+  <block dials="I8193">
+   <![CDATA[_theVariable=8193;]]>
+  </block>
+  <block dials="I16383">
+   <![CDATA[_theVariable=16383;]]>
+  </block>
+  <block dials="MAXSHORT">
+   <![CDATA[_theVariable=MAXSHORT;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="dt">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string" />
+        <xs:element name="parent" type="xs:string" />
+        <xs:element name="dt_type" type="xs:string" />
+	<xs:element name="dial_groups" type="dial_groups" />
+        <xs:element name="include" type="code_blocks" />
+        <xs:element name="defines" type="code_blocks" />
+        <xs:element name="access" type="code_blocks" />
+        <xs:element name="commit" type="code_blocks" />
+        <xs:element name="cleanup" type="code_blocks" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="dial_groups">
+    <xs:sequence>
+      <xs:element name="group" type="dial_group" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="order" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="dial_group">
+    <xs:sequence>
+      <xs:element name="dial" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="code_blocks">
+    <xs:sequence>
+      <xs:element name="block" type="block" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="block">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+	<xs:attribute name="dials" type="xs:string"/> 
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

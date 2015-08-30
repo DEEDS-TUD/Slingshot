@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_sig_how
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    SIGBLOCK
+   </dial>
+   <dial>
+    SIGUNBLOCK
+   </dial>
+   <dial>
+    SIGSETMASK
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <signal.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="SIGBLOCK">
+   <![CDATA[_theVariable= SIG_BLOCK;]]>
+  </block>
+  <block dials="SIGUNBLOCK">
+   <![CDATA[_theVariable= SIG_UNBLOCK;]]>
+  </block>
+  <block dials="SIGSETMASK">
+   <![CDATA[_theVariable= SIG_SETMASK;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

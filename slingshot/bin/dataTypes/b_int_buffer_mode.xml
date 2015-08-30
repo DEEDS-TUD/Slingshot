@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_buffer_mode
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    IOFBF
+   </dial>
+   <dial>
+    IONBF
+   </dial>
+   <dial>
+    IOLBF
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="IOFBF">
+   <![CDATA[_theVariable= _IOFBF;]]>
+  </block>
+  <block dials="IONBF">
+   <![CDATA[_theVariable= _IONBF;]]>
+  </block>
+  <block dials="IOLBF">
+   <![CDATA[_theVariable= _IOLBF;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

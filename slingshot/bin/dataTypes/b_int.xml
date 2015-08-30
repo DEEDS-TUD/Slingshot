@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int
+ </name>
+ <parent>
+  b_short
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    MAXINT
+   </dial>
+   <dial>
+    NEG_MAXINT
+   </dial>
+   <dial>
+    A
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_short.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="MAXINT">
+   <![CDATA[_theVariable= MAXINT;]]>
+  </block>
+  <block dials="NEG_MAXINT">
+   <![CDATA[_theVariable= -MAXINT;]]>
+  </block>
+  <block dials="A">
+   <![CDATA[_theVariable= (int)'A';]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

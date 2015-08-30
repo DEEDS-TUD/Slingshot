@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_sigaction
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  structSigactionPtr
+ </dt_type>
+ <dial_groups order="SA_HANDLER;SA_MASK;SA_FLAGS;SA_SIGACTION">
+  <group name="SA_SIGACTION">
+   <dial>
+    ACTION_NULL
+   </dial>
+   <dial>
+    ACTION_USR_FUNC
+   </dial>
+  </group>
+  <group name="SA_HANDLER">
+   <dial>
+    NULL
+   </dial>
+   <dial>
+    SIG_DFL
+   </dial>
+   <dial>
+    SIG_IGN
+   </dial>
+   <dial>
+    USR_FUNC
+   </dial>
+   <dial>
+    SIG_ERR
+   </dial>
+  </group>
+  <group name="SA_MASK">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    FULL
+   </dial>
+   <dial>
+    SIGABRT
+   </dial>
+   <dial>
+    SIGSEGV
+   </dial>
+   <dial>
+    SIGINT
+   </dial>
+   <dial>
+    SIGILL
+   </dial>
+   <dial>
+    ZERO
+   </dial>
+   <dial>
+    MAXINT
+   </dial>
+  </group>
+  <group name="SA_FLAGS">
+   <dial>
+    SA_NOCLDSTOP_SET
+   </dial>
+   <dial>
+    SA_SIGINFO_SET
+   </dial>
+   <dial>
+    SA_ONSTACK
+   </dial>
+   <dial>
+    SA_RESTART
+   </dial>
+   <dial>
+    SA_ALL
+   </dial>
+   <dial>
+    NO_EXTRA
+   </dial>
+   <dial>
+    SA_ZERO
+   </dial>
+   <dial>
+    SA_MAXINT
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#define structSigactionPtr struct sigaction*
+#include <signal.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[struct sigaction sigaction_temp;
+  void foo_handler1(int a){ }
+  void foo_action1(int sig, siginfo_t * b, void * c){ }]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[sigaction_temp.sa_flags = 0;
+  sigaction_temp.sa_mask.__val[0] = 0;]]>
+  </block>
+  <block dials="NULL">
+   <![CDATA[sigaction_temp.sa_handler = NULL;]]>
+  </block>
+  <block dials="SIG_DFL">
+   <![CDATA[sigaction_temp.sa_handler = SIG_DFL;]]>
+  </block>
+  <block dials="SIG_IGN">
+   <![CDATA[sigaction_temp.sa_handler = SIG_IGN;]]>
+  </block>
+  <block dials="USR_FUNC">
+   <![CDATA[sigaction_temp.sa_handler = foo_handler1;]]>
+  </block>
+  <block dials="SIG_ERR">
+   <![CDATA[sigaction_temp.sa_handler = SIG_ERR;]]>
+  </block>
+  <block dials="EMPTY">
+   <![CDATA[if((sigemptyset (&sigaction_temp.sa_mask))!=0)
+    {
+      FILE* logFile = NULL;
+   
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sigaction - sigemptyset at EMPTY failed. Function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="FULL">
+   <![CDATA[if((sigfillset (&sigaction_temp.sa_mask))!=0)
+    {
+      FILE* logFile = NULL;
+   
+      if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+      {
+        exit(99);
+      }
+      fprintf (logFile, "b_ptr_sigaction - sigfullset at FULL failed. Function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="SIGABRT">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = SIGABRT;]]>
+  </block>
+  <block dials="SIGSEGV">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = SIGSEGV;]]>
+  </block>
+  <block dials="SIGINT">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = SIGINT;]]>
+  </block>
+  <block dials="SIGILL">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = SIGILL;]]>
+  </block>
+  <block dials="ZERO">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = 0;]]>
+  </block>
+  <block dials="MAXINT">
+   <![CDATA[sigaction_temp.sa_mask.__val[0] = MAXINT;]]>
+  </block>
+  <block dials="SA_NOCLDSTOP_SET, SA_ALL">
+   <![CDATA[sigaction_temp.sa_flags |= SA_NOCLDSTOP;]]>
+  </block>
+  <block dials="SA_SIGINFO_SET, SA_ALL">
+   <![CDATA[sigaction_temp.sa_flags |= SA_SIGINFO;]]>
+  </block>
+  <block dials="SA_ONSTACK, SA_ALL">
+   <![CDATA[sigaction_temp.sa_flags |= SA_ONSTACK;]]>
+  </block>
+  <block dials="SA_RESTART, SA_ALL">
+   <![CDATA[sigaction_temp.sa_flags |= SA_RESTART;]]>
+  </block>
+  <block dials="SA_ZERO">
+   <![CDATA[sigaction_temp.sa_flags |= 0;]]>
+  </block>
+  <block dials="SA_MAXINT">
+   <![CDATA[sigaction_temp.sa_flags |= MAXINT;]]>
+  </block>
+  <block dials="SA_ALL">
+   <![CDATA[sigaction_temp.sa_flags |= SA_RESTART | SA_NODEFER |  SA_RESETHAND |  SA_NOCLDWAIT;]]>
+  </block>
+  <block dials="ACTION_NULL">
+   <![CDATA[sigaction_temp.sa_sigaction = NULL;]]>
+  </block>
+  <block dials="ACTION_USR_FUNC">
+   <![CDATA[sigaction_temp.sa_sigaction = foo_action1;]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &sigaction_temp;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

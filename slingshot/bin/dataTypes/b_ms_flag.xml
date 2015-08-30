@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ms_flag
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    ASYNC
+   </dial>
+   <dial>
+    SYNC
+   </dial>
+   <dial>
+    INVALIDATE
+   </dial>
+   <dial>
+    ALL
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <sys/mman.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="ASYNC">
+   <![CDATA[_theVariable= MS_ASYNC;]]>
+  </block>
+  <block dials="SYNC">
+   <![CDATA[_theVariable= MS_SYNC;]]>
+  </block>
+  <block dials="INVALIDATE">
+   <![CDATA[_theVariable = MS_INVALIDATE;]]>
+  </block>
+  <block dials="ALL">
+   <![CDATA[_theVariable = MS_ASYNC | MS_SYNC | MS_INVALIDATE;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

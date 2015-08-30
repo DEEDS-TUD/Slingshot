@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_clockid
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  clockid_t
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    REALTIME
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"
+   #include <time.h>]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="REALTIME">
+   <![CDATA[_theVariable= CLOCK_REALTIME;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

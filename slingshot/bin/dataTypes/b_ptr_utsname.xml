@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_utsname
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  utsnamePtr
+ </dt_type>
+ <dial_groups order="SYSNAME;NODENAME;RELEASE;VERSION;MACHINE">
+  <group name="SYSNAME">
+   <dial>
+    S_NULL
+   </dial>
+   <dial>
+    S_SIZE1
+   </dial>
+   <dial>
+    S_SYS_NMLN
+   </dial>
+   <dial>
+    S_SELF
+   </dial>
+  </group>
+  <group name="NODENAME">
+   <dial>
+    N_NULL
+   </dial>
+   <dial>
+    N_SIZE1
+   </dial>
+   <dial>
+    N_SYS_NMLN
+   </dial>
+   <dial>
+    N_SELF
+   </dial>
+  </group>
+  <group name="MACHINE">
+   <dial>
+    M_NULL
+   </dial>
+   <dial>
+    M_SIZE1
+   </dial>
+   <dial>
+    M_SYS_NMLN
+   </dial>
+   <dial>
+    M_SELF
+   </dial>
+  </group>
+  <group name="VERSION">
+   <dial>
+    V_NULL
+   </dial>
+   <dial>
+    V_SIZE1
+   </dial>
+   <dial>
+    V_SYS_NMLN
+   </dial>
+   <dial>
+    V_SELF
+   </dial>
+  </group>
+  <group name="RELEASE">
+   <dial>
+    R_NULL
+   </dial>
+   <dial>
+    R_SIZE1
+   </dial>
+   <dial>
+    R_SYS_NMLN
+   </dial>
+   <dial>
+    R_SELF
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#define utsnamePtr struct utsname *
+#include <sys/utsname.h>
+#include "b_ptr_buf.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static struct utsname utsname_temp  ;]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[// open logFile
+  FILE* logFile = NULL;
+  if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+  {
+    exit(99);
+  }]]>
+  </block>
+  <block dials="S_SELF">
+   <![CDATA[struct utsname utsname_s_self;
+    if(!(uname(&utsname_s_self) ==0))
+    {
+      fprintf(logFile, "b_ptr_utsname - S_SELF error occurred in uname function not tested.\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy (utsname_temp.sysname, utsname_s_self.sysname);]]>
+  </block>
+  <block dials="S_NULL">
+   <![CDATA[utsname_temp.sysname[0] = '\0';]]>
+  </block>
+  <block dials="S_SIZE1">
+   <![CDATA[utsname_temp.sysname[0] = 'a';
+    utsname_temp.sysname[1] = '\0';]]>
+  </block>
+  <block dials="S_SYS_NMLN">
+   <![CDATA[int s_i;
+    for (s_i=0; s_i<SYS_NMLN; s_i++)
+    {
+      utsname_temp.sysname[s_i] = 'a'; 
+    }]]>
+  </block>
+  <block dials="N_SELF">
+   <![CDATA[struct utsname utsname_n_self;
+    if(!(uname(&utsname_n_self) ==0))   
+    {
+      fprintf(logFile, "b_ptr_utsname - N_SELF error occurred in uname function not tested.\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy (utsname_temp.nodename, utsname_n_self.nodename);]]>
+  </block>
+  <block dials="N_NULL">
+   <![CDATA[utsname_temp.nodename[0] = '\0';]]>
+  </block>
+  <block dials="N_SIZE1">
+   <![CDATA[utsname_temp.nodename[0] = 'a';
+    utsname_temp.nodename[1] = '\0';]]>
+  </block>
+  <block dials="N_SYS_NMLN">
+   <![CDATA[int n_i;
+    for (n_i=0; n_i<SYS_NMLN; n_i++)
+    {
+      utsname_temp.nodename[n_i] = 'a';
+    }]]>
+  </block>
+  <block dials="R_SELF">
+   <![CDATA[struct utsname utsname_r_self;
+    if(!(uname(&utsname_r_self) ==0))   
+    {
+      fprintf(logFile, "b_ptr_utsname - R_SELF error occurred in uname function not tested.\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy (utsname_temp.release, utsname_r_self.release);]]>
+  </block>
+  <block dials="R_NULL">
+   <![CDATA[utsname_temp.release[0] ='\0';]]>
+  </block>
+  <block dials="R_SIZE1">
+   <![CDATA[utsname_temp.release[0] ='a';
+    utsname_temp.release[1] ='\0';]]>
+  </block>
+  <block dials="R_SYS_NMLN">
+   <![CDATA[int r_i;
+    for (r_i=0; r_i<SYS_NMLN; r_i++)
+    {
+      utsname_temp.release[r_i] = 'a'; 
+    }]]>
+  </block>
+  <block dials="V_SELF">
+   <![CDATA[struct utsname utsname_v_self;
+    if(!(uname(&utsname_v_self) ==0))   
+    {
+      fprintf(logFile, "b_ptr_utsname - V_SELF error occurred in uname function not tested.\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy (utsname_temp.version, utsname_v_self.version);]]>
+  </block>
+  <block dials="V_NULL">
+   <![CDATA[utsname_temp.version[0] = '\0';]]>
+  </block>
+  <block dials="V_SIZE1">
+   <![CDATA[utsname_temp.version[0] = 'a';
+    utsname_temp.version[1] = '\0';]]>
+  </block>
+  <block dials="V_SYS_NMLN">
+   <![CDATA[int v_i;
+    for (v_i=0; v_i<SYS_NMLN; v_i++)
+    {
+      utsname_temp.version[v_i] = 'a'; 
+    }]]>
+  </block>
+  <block dials="M_SELF">
+   <![CDATA[struct utsname utsname_m_self;
+    if(!(uname(&utsname_m_self) ==0))   
+    {
+      fprintf(logFile, "b_ptr_utsname - M_SELF error occurred in uname function not tested.\n");
+      fclose(logFile);
+      exit(99);
+    }
+    strcpy (utsname_temp.machine, utsname_m_self.machine);]]>
+  </block>
+  <block dials="M_NULL">
+   <![CDATA[utsname_temp.machine[0] = '\0';]]>
+  </block>
+  <block dials="M_SIZE1">
+   <![CDATA[utsname_temp.machine[0] = 'a';
+    utsname_temp.machine[1] = '\0';]]>
+  </block>
+  <block dials="M_SYS_NMLN">
+   <![CDATA[int m_i;
+    for (m_i=0; m_i<SYS_NMLN; m_i++)
+    {
+      utsname_temp.machine[m_i] = 'a'; 
+    }]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = &utsname_temp;
+  fclose(logFile);]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

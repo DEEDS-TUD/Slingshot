@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_char_mode
+ </name>
+ <parent>
+  b_ptr_char
+ </parent>
+ <dt_type>
+  char*
+ </dt_type>
+ <dial_groups order="MODE">
+  <group name="MODE">
+   <dial>
+    R
+   </dial>
+   <dial>
+    W
+   </dial>
+   <dial>
+    A
+   </dial>
+   <dial>
+    R_PLUS
+   </dial>
+   <dial>
+    W_PLUS
+   </dial>
+   <dial>
+    A_PLUS
+   </dial>
+   <dial>
+    B
+   </dial>
+   <dial>
+    C
+   </dial>
+   <dial>
+    N
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_char.h" //parent class include file]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static char  charArray[3];]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="R">
+   <![CDATA[charArray[0] = 'r';
+     charArray[1] = '\0';]]>
+  </block>
+  <block dials="R_PLUS">
+   <![CDATA[charArray[0] = 'r';
+     charArray[1] = '+';
+     charArray[2] = '\0';]]>
+  </block>
+  <block dials="W">
+   <![CDATA[charArray[0] = 'w';
+     charArray[1] = '\0';]]>
+  </block>
+  <block dials="W_PLUS">
+   <![CDATA[charArray[0] = 'w';
+     charArray[1] = '+';
+     charArray[2] = '\0';]]>
+  </block>
+  <block dials="A">
+   <![CDATA[charArray[0] = 'a';
+     charArray[1] = '\0';]]>
+  </block>
+  <block dials="A_PLUS">
+   <![CDATA[charArray[0] = 'a';
+     charArray[1] = '+';
+     charArray[2] = '\0';]]>
+  </block>
+  <block dials="B">
+   <![CDATA[charArray[0] = 'b';
+     charArray[1] = '\0';]]>
+  </block>
+  <block dials="C">
+   <![CDATA[charArray[0] = 'c';
+     charArray[1] = '\0';]]>
+  </block>
+  <block dials="N">
+   <![CDATA[charArray[0] = 'n';
+     charArray[1] = '\0';]]>
+  </block>
+  <block>
+   <![CDATA[_theVariable = charArray;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

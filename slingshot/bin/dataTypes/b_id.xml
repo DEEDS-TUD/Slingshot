@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_id
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  uid_t
+ </dt_type>
+ <dial_groups order="ID">
+  <group name="ID">
+   <dial>
+    UID_SELF
+   </dial>
+   <dial>
+    GID_SELF
+   </dial>
+   <dial>
+    EUID_SELF
+   </dial>
+   <dial>
+    EGID_SELF
+   </dial>
+   <dial>
+    UID_PLUS1
+   </dial>
+   <dial>
+    GID_PLUS1
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sys/types.h>
+#include <unistd.h>
+#include "bTypes.h"
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="UID_SELF">
+   <![CDATA[_theVariable = getuid();]]>
+  </block>
+  <block dials="GID_SELF">
+   <![CDATA[_theVariable = getgid();]]>
+  </block>
+  <block dials="EUID_SELF">
+   <![CDATA[_theVariable = geteuid();]]>
+  </block>
+  <block dials="EGID_SELF">
+   <![CDATA[_theVariable = getegid();]]>
+  </block>
+  <block dials="UID_PLUS1">
+   <![CDATA[_theVariable = getuid() + 1;]]>
+  </block>
+  <block dials="GID_PLUS1">
+   <![CDATA[_theVariable = getgid() + 1;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

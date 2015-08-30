@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_ptr_char
+ </name>
+ <parent>
+  b_ptr_buf
+ </parent>
+ <dt_type>
+  char*
+ </dt_type>
+ <dial_groups order="SIZE;CONTENTS;FILL">
+  <group name="FILL">
+   <dial>
+    EMPTY
+   </dial>
+   <dial>
+    SOME
+   </dial>
+   <dial>
+    FULL
+   </dial>
+  </group>
+  <group name="CONTENTS">
+   <dial>
+    CHAR
+   </dial>
+   <dial>
+    NUM
+   </dial>
+   <dial>
+    NASTY
+   </dial>
+   <dial>
+    ESC
+   </dial>
+  </group>
+  <group name="SIZE">
+   <dial>
+    S1
+   </dial>
+   <dial>
+    S4
+   </dial>
+   <dial>
+    S16
+   </dial>
+   <dial>
+    S8K
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_ptr_buf.h" //parent class include file]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[static char  *save_b_ptr_char=NULL;
+#define sup_fillstring(buf,len,fillChar)   for (int i=0; i<len; i++) buf[i] = fillChar]]>
+  </block>
+ </defines>
+ <access>
+  <block>
+   <![CDATA[char  fillVar;
+  int   divisor;
+  int  size;
+  char  *temp_b_ptr_char=NULL;
+  FILE* logFile = NULL;
+
+  if ((logFile = fopen ("/tmp/templateLog.txt","a+")) == NULL)
+  {
+    exit(99);
+  }]]>
+  </block>
+  <block dials="S1">
+   <![CDATA[size = 1;
+    temp_b_ptr_char = (char *)malloc(size);
+    if(temp_b_ptr_char == NULL)
+    {
+      fprintf(logFile,"b_ptr_char - S1 malloc failed, function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="S4">
+   <![CDATA[size = 4;
+    temp_b_ptr_char = (char *)malloc(size);
+    if(temp_b_ptr_char == NULL)
+    {
+      fprintf(logFile, "b_ptr_char - S4 malloc failed, function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="S16">
+   <![CDATA[size = 16;
+    temp_b_ptr_char = (char *)malloc(size);
+    if(temp_b_ptr_char == NULL)
+    {
+      fprintf(logFile,"b_ptr_char - S16 malloc failed, function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="S8K">
+   <![CDATA[size = 8192;
+    temp_b_ptr_char = (char *)malloc(size);
+    if(temp_b_ptr_char == NULL)
+    {
+      fprintf(logFile,"b_ptr_char - S8K malloc failed, function not tested\n");
+      fclose(logFile);
+      exit(99);
+    }]]>
+  </block>
+  <block dials="CHAR">
+   <![CDATA[fillVar = 'A';]]>
+  </block>
+  <block dials="NUM">
+   <![CDATA[fillVar = '1';]]>
+  </block>
+  <block dials="NASTY">
+   <![CDATA[fillVar = char(22);]]>
+  </block>
+  <block dials="ESC">
+   <![CDATA[fillVar = char(27);]]>
+  </block>
+  <block dials="SOME">
+   <![CDATA[sup_fillstring(temp_b_ptr_char, (int)(size/3), fillVar);
+      temp_b_ptr_char[(int)(size/3)+1]='\0';]]>
+  </block>
+  <block dials="FULL">
+   <![CDATA[sup_fillstring(temp_b_ptr_char, size, fillVar);]]>
+  </block>
+  <block dials="EMPTY">
+   <![CDATA[temp_b_ptr_char[0]='\0';]]>
+  </block>
+  <block>
+   <![CDATA[fclose(logFile);
+  save_b_ptr_char = temp_b_ptr_char;
+  _theVariable = temp_b_ptr_char;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup>
+  <block>
+   <![CDATA[if (save_b_ptr_char !=NULL)
+   {
+     free(save_b_ptr_char);
+   }]]>
+  </block>
+ </cleanup>
+</dt>

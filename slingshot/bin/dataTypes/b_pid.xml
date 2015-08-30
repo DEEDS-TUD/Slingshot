@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_pid
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  pid_t
+ </dt_type>
+ <dial_groups order="PID">
+  <group name="PID">
+   <dial>
+    PID_SELF
+   </dial>
+   <dial>
+    PID_CHILD
+   </dial>
+   <dial>
+    PID_65535
+   </dial>
+   <dial>
+    PID_65536
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include <sys/types.h>
+#include <unistd.h>
+#include "bTypes.h"
+#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="PID_SELF">
+   <![CDATA[_theVariable = getpid();]]>
+  </block>
+  <block dials="PID_CHILD">
+   <![CDATA[static int pid_kid;
+     if((pid_kid = fork())==0)   /* many syscalls taking a pid need a child to exist */
+     {
+        sleep (1); //child wait for sometime long enough
+        exit(0); //child exits
+     }
+     _theVariable = pid_kid;]]>
+  </block>
+  <block dials="PID_65535">
+   <![CDATA[_theVariable = 65535;]]>
+  </block>
+  <block dials="PID_65536">
+   <![CDATA[_theVariable = 65536;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>

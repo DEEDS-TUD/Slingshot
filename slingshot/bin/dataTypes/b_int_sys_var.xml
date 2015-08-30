@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dt>
+ <name>
+  b_int_sys_var
+ </name>
+ <parent>
+  b_int
+ </parent>
+ <dt_type>
+  int
+ </dt_type>
+ <dial_groups order="HVAL">
+  <group name="HVAL">
+   <dial>
+    PAGESIZE
+   </dial>
+   <dial>
+    MEMLOCK
+   </dial>
+  </group>
+ </dial_groups>
+ <include>
+  <block>
+   <![CDATA[#include "b_int.h"]]>
+  </block>
+ </include>
+ <defines>
+  <block>
+   <![CDATA[]]>
+  </block>
+ </defines>
+ <access>
+  <block dials="PAGESIZE">
+   <![CDATA[_theVariable= _SC_PAGESIZE;]]>
+  </block>
+  <block dials="MEMLOCK">
+   <![CDATA[_theVariable= _SC_MEMLOCK;]]>
+  </block>
+ </access>
+ <commit/>
+ <cleanup/>
+</dt>
